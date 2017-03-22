@@ -38,7 +38,18 @@
                             <constraint firstItem="nj5-gO-4Ve" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-64" id="jaV-L4-Gfq"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="YyN-Ms-IH5"/>
+                    <navigationItem key="navigationItem" id="YyN-Ms-IH5">
+                        <barButtonItem key="rightBarButtonItem" style="done" id="rgp-LV-IQC">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wf4-7O-fqC">
+                                <rect key="frame" x="276" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Refresh"/>
+                                <connections>
+                                    <action selector="refreshButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YMN-La-L8E"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="nj5-gO-4Ve" id="bq0-kv-pfh"/>
                     </connections>

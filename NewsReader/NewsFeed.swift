@@ -50,7 +50,7 @@ extension NewsFeed : XMLParserDelegate {
     }
     
     func parserDidEndDocument(_ parser: XMLParser) {
-
+        self.delegate?.feedUpdated()
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
@@ -90,7 +90,7 @@ extension NewsFeed : XMLParserDelegate {
             switch elementName {
             case "item":
                 newsItems.sort { $0.pubDate! > $1.pubDate! }
-                self.delegate?.feedUpdated()
+                
             case "title":
                 newsItems[newsItems.count - 1].title = xmlBuffer
             case "link":
