@@ -33,4 +33,10 @@ class NewsReaderTests: XCTestCase {
         }
     }
     
+    func testFeed() {
+        let newsFeed = NewsFeed()
+        newsFeed.getNewsFeed()
+        
+    }
+    
 }
