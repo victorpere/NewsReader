@@ -28,13 +28,20 @@ class NewsFeed : NSObject {
     var xmlBuffer: String!
     var dateFormatter = DateFormatter()
     
+// MARK: - Public methods
+    
     func getNewsFeed() {
-        newsItems.removeAll()
-        let requester = Requester()
-        requester.delegate = self
-        requester.getData(from: feedURL)
+        let q = DispatchQueue(label: "getNewsFeedQueue")
+        q.async {
+            self.newsItems.removeAll()
+            let requester = Requester()
+            requester.delegate = self
+            requester.getData(from: self.feedURL)
+        }
     }
 }
+
+// MARK: - RequesterDelegate
 
 extension NewsFeed : RequesterDelegate {
     func receivedData(data: Data) {
@@ -43,6 +50,8 @@ extension NewsFeed : RequesterDelegate {
         xmlParser.parse()
     }
 }
+
+// MARK: - XMLParserDelegate
 
 extension NewsFeed : XMLParserDelegate {
     func parserDidStartDocument(_ parser: XMLParser) {
@@ -54,8 +63,6 @@ extension NewsFeed : XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        //print()
-        //print("start element ", elementName)
         xmlBuffer = ""
         
         if elementName == "item" {
@@ -69,49 +76,50 @@ extension NewsFeed : XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        //print(string, terminator: "")
-        xmlBuffer.append(string)
+        self.xmlBuffer.append(string)
     }
     
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
-        //print("foundCDATA")
         let stringData = String(data: CDATABlock, encoding: .utf8)
-        //print(stringData)
         
-        xmlBuffer = stringData as String!
+        self.xmlBuffer = stringData as String!
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        //print()
-        //print("end element ", elementName)
         
         if newsItems.count > 0 {
             // parsing news item
+            let newsItem = self.newsItems[newsItems.count - 1]
+            
             switch elementName {
             case "item":
                 newsItems.sort { $0.pubDate! > $1.pubDate! }
                 
             case "title":
-                newsItems[newsItems.count - 1].title = xmlBuffer
+                newsItem.title = self.xmlBuffer
             case "link":
-                newsItems[newsItems.count - 1].link  = xmlBuffer
+                newsItem.link  = self.xmlBuffer
+                let q = DispatchQueue(label: "categoryQueue")
+                q.async {
+                    newsItem.category = newsItem.link!.category()
+                }
             case "description":
-                newsItems[newsItems.count - 1].description = xmlBuffer
+                newsItem.description = self.xmlBuffer
             case "author":
-                newsItems[newsItems.count - 1].author = xmlBuffer
+                newsItem.author = self.xmlBuffer
             case "dc:creator":
-                newsItems[newsItems.count - 1].creator = xmlBuffer
+                newsItem.creator = self.xmlBuffer
             case "creditLine":
-                newsItems[newsItems.count - 1].creditLine = xmlBuffer
+                newsItem.creditLine = self.xmlBuffer
             case "guid":
-                newsItems[newsItems.count - 1].guid  = xmlBuffer
+                newsItem.guid  = self.xmlBuffer
             case "pubDate":
-                newsItems[newsItems.count - 1].pubDateStr = xmlBuffer
-                newsItems[newsItems.count - 1].pubDate = dateFormatter.ctvdate(from: newsItems[newsItems.count - 1].pubDateStr!)
+                newsItem.pubDateStr = self.xmlBuffer
+                newsItem.pubDate = dateFormatter.ctvdate(from: newsItem.pubDateStr!)
             case "ctv:lastModifiedDate>":
-                newsItems[newsItems.count - 1].modDateStr = xmlBuffer
+                newsItem.modDateStr = self.xmlBuffer
             case "enclosure":
-                newsItems[newsItems.count - 1].imageCaption = xmlBuffer
+                newsItem.imageCaption = self.xmlBuffer
             default:
                 break
             }
@@ -119,13 +127,15 @@ extension NewsFeed : XMLParserDelegate {
             // parsing feed header
             switch elementName {
             case "title":
-                self.title = xmlBuffer
+                self.title = self.xmlBuffer
             default:
                 break
             }
         }
     }
 }
+
+// MARK: - protocol NewsFeedDelegate
 
 protocol NewsFeedDelegate {
     func feedUpdated()

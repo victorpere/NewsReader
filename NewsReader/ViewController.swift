@@ -12,114 +12,133 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var newsFeed = NewsFeed()
+    fileprivate var newsFeed = NewsFeed()
     
-    @IBAction func refreshButton(_ sender: Any) {
-        refreshFeed()
-    }
+// MARK: - View methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        tableView.delegate = self
-        newsFeed.delegate = self
-        refreshFeed()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.tableView.delegate = self
+        self.newsFeed.delegate = self
+        
+        self.tableView.estimatedRowHeight = 140;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        
+        self.refreshFeed()
     }
     
-    func refreshFeed() {
-        let queue = DispatchQueue.global(qos: .userInitiated)
-        queue.async {
+// MARK: - Actions
+    
+    @IBAction func refreshButton(_ sender: Any) {
+        self.refreshFeed()
+    }
+    
+// MARK: - Private methods
+    
+    private func refreshFeed() {
+        let q = DispatchQueue.global(qos: .userInitiated)
+        q.async {
             self.newsFeed.getNewsFeed()
         }
     }
+    
 }
+
+// MARK: - UITableViewDataSource
 
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
-        return newsFeed.newsItems.count
+        return self.newsFeed.newsItems.count
     }
     
-    func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let newsItem = self.newsFeed.newsItems[indexPath.row]
         
+        var cell = tableView.dequeueReusableCell(withIdentifier: "NewsItem") as? NewsItemCell
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
-        cell.tag = indexPath.row
-        
-        var titleLabel = cell.contentView.viewWithTag(1) as! UILabel?
-        if titleLabel == nil {
-            titleLabel = UILabel(frame: CGRect(x: 100, y: 0, width: cell.frame.width, height: 40))
-            titleLabel?.tag = 1
-            cell.contentView.addSubview(titleLabel!)
+        if (cell == nil)
+        {
+            cell = UINib(nibName: "NewsItemCell", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as? NewsItemCell
         }
-        titleLabel?.text = newsFeed.newsItems[indexPath.row].title
         
-        var pubDateLabel = cell.contentView.viewWithTag(2) as! UILabel?
-        if pubDateLabel == nil {
-            pubDateLabel = UILabel(frame: CGRect(x: 100, y: 40, width: cell.frame.width, height: 20))
-            pubDateLabel?.tag = 2
-            cell.contentView.addSubview(pubDateLabel!)
-        }
-        pubDateLabel?.text = newsFeed.newsItems[indexPath.row].pubDateStr
+        cell!.tag = indexPath.row
+        cell!.titleLabel.text = newsItem.title
+        cell!.descriptionLabel.text = newsItem.description
+        cell!.dateLabel.text = newsItem.pubDateStr
         
-        var imageView = cell.contentView.viewWithTag(3) as! UIImageView?
-        if imageView == nil {
-            imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-            imageView?.tag = 3
-            cell.contentView.addSubview(imageView!)
+        if newsItem.category != nil {
+            cell!.categoryLabel.text = newsItem.category
+            cell!.categoryLabel.isHidden = false
+        } else {
+            cell!.categoryLabel.isHidden = true
         }
-    
-        let queue = DispatchQueue.global(qos: .userInitiated)
-        queue.async {
-            do {
-                let imageData = try Data(contentsOf: URL(string: self.newsFeed.newsItems[indexPath.row].imageURL!)!)
-                let image = UIImage(data: imageData)
-                if image != nil {
-                    DispatchQueue.main.async {
-                        if cell.tag == indexPath.row {
-                            imageView?.image = image
-                            cell.setNeedsLayout()
+        
+        let q1 = DispatchQueue(label: "visitedLabelQueue")
+        q1.async {
+            if newsItem.visited {
+                DispatchQueue.main.async {
+                    cell!.visitedLabel.isHidden = false
+                }
+            } else {
+                DispatchQueue.main.async {
+                    cell!.visitedLabel.isHidden = true
+                }
+            }
+        }
+
+        if newsItem.image != nil {
+            cell?.newsImageView.image = newsItem.image
+        } else if newsItem.imageURL != nil {
+            let q2 = DispatchQueue.global(qos: .userInitiated)
+            q2.async {
+                do {
+                    let imageData = try Data(contentsOf: URL(string: newsItem.imageURL!)!)
+                    let image = UIImage(data: imageData)
+                    if image != nil {
+                        newsItem.image = image
+                        DispatchQueue.main.async {
+                            if cell!.tag == indexPath.row {
+                                cell!.newsImageView.image = image
+                                cell!.setNeedsLayout()
+                            }
                         }
                     }
+                } catch let error as NSError {
+                    print("error loading image data: \(error)")
                 }
-            } catch let error as NSError {
-                print("error loading image data: \(error)")
             }
-
         }
         
-        return cell
+        return cell!
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        newsFeed.newsItems[indexPath.row].visited = true
+        let newsItem = self.newsFeed.newsItems[indexPath.row]
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        let q1 = DispatchQueue(label: "setVisitedQueue")
+        q1.async {
+            newsItem.visited = true
+        }
+        
+        let cell = self.tableView.cellForRow(at: indexPath) as? NewsItemCell
+        cell?.visitedLabel.isHidden = false
+        
+        self.tableView.deselectRow(at: indexPath, animated: true)
         
         let detailScreen = WebViewController(nibName: nil, bundle: nil)
-        detailScreen.url = newsFeed.newsItems[indexPath.row].link
+        detailScreen.url = newsItem.link
         self.navigationController?.pushViewController(detailScreen, animated: true)
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
-    }
 }
+
+// MARK: - NewsFeedDelegate
 
 extension ViewController: NewsFeedDelegate {
     func feedUpdated() {

@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class NewsItem {
+    let userDefaults = UserDefaults.standard
     var title: String?
     var link: String?
     var description: String?
@@ -24,6 +25,24 @@ class NewsItem {
     var image: UIImage?
     var category: String?
     
-    var visited: Bool = false
     var pubDate: Date?
+        
+    var visited: Bool {
+        get {
+            if self.guid == nil {
+                return false
+            }
+            if let visited = self.userDefaults.value(forKey: self.guid!) as? Bool {
+                return visited
+            }
+            return false
+        }
+        set(value) {
+            if value && self.guid != nil {
+                self.userDefaults.setValue(value, forKey: self.guid!)
+                self.userDefaults.synchronize()
+            }
+        }
+    }
+ 
 }

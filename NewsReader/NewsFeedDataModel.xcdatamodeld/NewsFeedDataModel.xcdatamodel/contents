@@ -2,9 +2,9 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="StoredNewsItem" representedClassName="StoredNewsItem" syncable="YES" codeGenerationType="class">
         <attribute name="guid" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="visited" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="visitied" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="StoredNewsItem" positionX="-54" positionY="-9" width="128" height="75"/>
+        <element name="StoredNewsItem" positionX="-63" positionY="-18" width="128" height="75"/>
     </elements>
 </model>
