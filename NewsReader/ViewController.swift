@@ -96,11 +96,11 @@ extension ViewController: UITableViewDataSource {
         q1.async {
             if newsItem.visited {
                 DispatchQueue.main.async {
-                    cell!.visitedLabel.isHidden = false
+                    cell!.visitedImage.isHidden = false
                 }
             } else {
                 DispatchQueue.main.async {
-                    cell!.visitedLabel.isHidden = true
+                    cell!.visitedImage.isHidden = true
                 }
             }
         }
@@ -152,7 +152,7 @@ extension ViewController: UITableViewDelegate {
             }
             
             let cell = self.tableView.cellForRow(at: indexPath) as? NewsItemCell
-            cell?.visitedLabel.isHidden = false
+            cell?.visitedImage.isHidden = false
             
             let detailScreen = WebViewController(nibName: nil, bundle: nil)
             detailScreen.url = newsItem.link

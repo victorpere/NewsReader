@@ -19,20 +19,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="191.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lRG-QU-gBr">
+                    <imageView verifyAmbiguity="off" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lRG-QU-gBr">
                         <rect key="frame" x="0.0" y="0.0" width="160" height="192"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="160" id="6zJ-9O-v0e"/>
                             <constraint firstAttribute="height" constant="160" id="Icq-Xf-TFR"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCb-Pj-bec">
+                    <label verifyAmbiguity="off" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cCb-Pj-bec">
                         <rect key="frame" x="168" y="0.0" width="207" height="40"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlo-Jw-r0b">
+                    <label verifyAmbiguity="off" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tlo-Jw-r0b">
                         <rect key="frame" x="168" y="170" width="145" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="J8Z-J0-jgd"/>
@@ -41,13 +41,7 @@
                         <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Read" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TOM-24-SlA">
-                        <rect key="frame" x="8" y="162" width="47" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7WI-zy-Hka">
+                    <label hidden="YES" verifyAmbiguity="off" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7WI-zy-Hka">
                         <rect key="frame" x="8" y="8" width="88" height="21"/>
                         <color key="backgroundColor" red="1" green="0.12908058980000001" blue="0.13588049830000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -64,12 +58,19 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="700" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-Kh-gah">
+                    <label verifyAmbiguity="off" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="700" ambiguous="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-Kh-gah">
                         <rect key="frame" x="168" y="48" width="207" height="114"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView hidden="YES" verifyAmbiguity="off" clipsSubviews="YES" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="visitedImage" translatesAutoresizingMaskIntoConstraints="NO" id="Lea-pq-Mnd">
+                        <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="160" id="Pn7-QM-Q8j"/>
+                            <constraint firstAttribute="width" constant="160" id="bqa-7W-iPF"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="vzb-Kh-gah" firstAttribute="top" secondItem="cCb-Pj-bec" secondAttribute="bottom" constant="8" id="5HQ-89-rQg"/>
@@ -78,16 +79,16 @@
                     <constraint firstItem="vzb-Kh-gah" firstAttribute="leading" secondItem="lRG-QU-gBr" secondAttribute="trailing" constant="8" id="Dwz-ZR-Zez"/>
                     <constraint firstAttribute="bottom" secondItem="tlo-Jw-r0b" secondAttribute="bottom" constant="0.5" id="GD4-Jc-8iK"/>
                     <constraint firstAttribute="trailing" secondItem="vzb-Kh-gah" secondAttribute="trailing" id="OTs-12-p0Q"/>
+                    <constraint firstItem="Lea-pq-Mnd" firstAttribute="top" secondItem="bKx-wD-9NN" secondAttribute="top" id="QiZ-iL-a4c"/>
                     <constraint firstItem="cCb-Pj-bec" firstAttribute="top" secondItem="bKx-wD-9NN" secondAttribute="top" id="R7O-gi-rtT"/>
                     <constraint firstItem="lRG-QU-gBr" firstAttribute="top" secondItem="bKx-wD-9NN" secondAttribute="top" id="S3c-ur-8oo"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="TOM-24-SlA" secondAttribute="bottom" constant="0.5" id="Tqt-Gq-wf7"/>
                     <constraint firstItem="tlo-Jw-r0b" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vzb-Kh-gah" secondAttribute="bottom" constant="8" id="VJQ-Dv-Ebb"/>
+                    <constraint firstItem="Lea-pq-Mnd" firstAttribute="leading" secondItem="bKx-wD-9NN" secondAttribute="leading" id="XQe-qC-npu"/>
                     <constraint firstItem="tlo-Jw-r0b" firstAttribute="leading" secondItem="lRG-QU-gBr" secondAttribute="trailing" constant="8" id="YeD-z3-A33"/>
                     <constraint firstItem="cCb-Pj-bec" firstAttribute="leading" secondItem="lRG-QU-gBr" secondAttribute="trailing" constant="8" id="aXv-Y8-HoM"/>
                     <constraint firstAttribute="bottom" secondItem="lRG-QU-gBr" secondAttribute="bottom" constant="0.5" id="hAO-CI-27r"/>
                     <constraint firstAttribute="trailing" secondItem="cCb-Pj-bec" secondAttribute="trailing" id="rib-mI-Ltu"/>
                     <constraint firstItem="lRG-QU-gBr" firstAttribute="leading" secondItem="bKx-wD-9NN" secondAttribute="leading" id="y9t-jj-pLU"/>
-                    <constraint firstItem="TOM-24-SlA" firstAttribute="leading" secondItem="bKx-wD-9NN" secondAttribute="leadingMargin" id="ylZ-zW-sc3"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -96,9 +97,12 @@
                 <outlet property="descriptionLabel" destination="vzb-Kh-gah" id="apV-Zi-D9c"/>
                 <outlet property="newsImageView" destination="lRG-QU-gBr" id="Qzp-ea-Kf7"/>
                 <outlet property="titleLabel" destination="cCb-Pj-bec" id="Z8D-zM-ZgP"/>
-                <outlet property="visitedLabel" destination="TOM-24-SlA" id="VMl-63-20b"/>
+                <outlet property="visitedImage" destination="Lea-pq-Mnd" id="9TM-dt-gOp"/>
             </connections>
             <point key="canvasLocation" x="25.5" y="126"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="visitedImage" width="160" height="160"/>
+    </resources>
 </document>
