@@ -25,7 +25,8 @@ class WebViewController: UIViewController {
         
         self.activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         self.activityIndicator.center = self.view.center
-        self.activityIndicator.activityIndicatorViewStyle = .gray
+        self.activityIndicator.activityIndicatorViewStyle = .whiteLarge
+        self.activityIndicator.color = .gray
         self.view.addSubview(self.activityIndicator)
         self.activityIndicator.startAnimating()
         

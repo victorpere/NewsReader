@@ -22,6 +22,11 @@ class ViewController: UIViewController {
         
         self.reachability = Reachability()
         
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Last refreshed: \(self.newsFeed.lastUpdate.formattedString())")
+        refreshControl.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
+        
+        self.tableView.refreshControl = refreshControl
         self.tableView.delegate = self
         self.newsFeed.delegate = self
         
@@ -39,8 +44,9 @@ class ViewController: UIViewController {
     
 // MARK: - Private methods
     
-    private func refreshFeed() {
+    @objc private func refreshFeed() {
         if !(self.reachability?.isReachable)! {
+            self.tableView.refreshControl!.endRefreshing()
             let alert = UIAlertController(title: "No iternet connection available", message: "Cannot refresh feed", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(okAction)
@@ -77,7 +83,7 @@ extension ViewController: UITableViewDataSource {
         cell!.tag = indexPath.row
         cell!.titleLabel.text = newsItem.title
         cell!.descriptionLabel.text = newsItem.description
-        cell!.dateLabel.text = newsItem.pubDateStr
+        cell!.dateLabel.text = newsItem.formattedPubDateStr
         
         if newsItem.category != nil {
             cell!.categoryLabel.text = newsItem.category
@@ -160,6 +166,9 @@ extension ViewController: UITableViewDelegate {
 extension ViewController: NewsFeedDelegate {
     func feedUpdated() {
         DispatchQueue.main.async {
+            let refreshControl = self.tableView.refreshControl!
+            refreshControl.attributedTitle = NSAttributedString(string: "Last refreshed: \(self.newsFeed.lastUpdate.formattedString())")
+            refreshControl.endRefreshing()
             self.tableView.reloadData()
         }
     }

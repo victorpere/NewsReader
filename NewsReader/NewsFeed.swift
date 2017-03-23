@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 class NewsFeed : NSObject {
+    let userDefaults = UserDefaults.standard
     let feedURL = "http://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009"
     
     var delegate: NewsFeedDelegate?
@@ -27,6 +28,19 @@ class NewsFeed : NSObject {
     
     var xmlBuffer: String!
     var dateFormatter = DateFormatter()
+    
+    var lastUpdate: Date {
+        get {
+            if let lastUpdate = self.userDefaults.value(forKey: "lastUpdate") as? Date {
+                return lastUpdate
+            }
+            return Date()
+        }
+        set(value) {
+            self.userDefaults.setValue(value, forKey: "lastUpdate")
+            self.userDefaults.synchronize()
+        }
+    }
     
 // MARK: - Public methods
     
@@ -59,6 +73,7 @@ extension NewsFeed : XMLParserDelegate {
     }
     
     func parserDidEndDocument(_ parser: XMLParser) {
+        self.lastUpdate = Date()
         self.delegate?.feedUpdated()
     }
     
@@ -81,7 +96,6 @@ extension NewsFeed : XMLParserDelegate {
     
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
         let stringData = String(data: CDATABlock, encoding: .utf8)
-        
         self.xmlBuffer = stringData as String!
     }
     
@@ -115,7 +129,8 @@ extension NewsFeed : XMLParserDelegate {
                 newsItem.guid  = self.xmlBuffer
             case "pubDate":
                 newsItem.pubDateStr = self.xmlBuffer
-                newsItem.pubDate = dateFormatter.ctvdate(from: newsItem.pubDateStr!)
+                newsItem.pubDate = newsItem.pubDateStr!.date() // dateFormatter.ctvdate(from: newsItem.pubDateStr!)
+                newsItem.formattedPubDateStr = newsItem.pubDate?.formattedString()
             case "ctv:lastModifiedDate>":
                 newsItem.modDateStr = self.xmlBuffer
             case "enclosure":

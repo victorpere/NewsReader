@@ -53,6 +53,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="kk9-ia-WDD"/>
                         </constraints>
+                        <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -63,8 +64,8 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-Kh-gah">
-                        <rect key="frame" x="168" y="48" width="207" height="65"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="700" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzb-Kh-gah">
+                        <rect key="frame" x="168" y="48" width="207" height="114"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -80,6 +81,7 @@
                     <constraint firstItem="cCb-Pj-bec" firstAttribute="top" secondItem="bKx-wD-9NN" secondAttribute="top" id="R7O-gi-rtT"/>
                     <constraint firstItem="lRG-QU-gBr" firstAttribute="top" secondItem="bKx-wD-9NN" secondAttribute="top" id="S3c-ur-8oo"/>
                     <constraint firstAttribute="bottomMargin" secondItem="TOM-24-SlA" secondAttribute="bottom" constant="0.5" id="Tqt-Gq-wf7"/>
+                    <constraint firstItem="tlo-Jw-r0b" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vzb-Kh-gah" secondAttribute="bottom" constant="8" id="VJQ-Dv-Ebb"/>
                     <constraint firstItem="tlo-Jw-r0b" firstAttribute="leading" secondItem="lRG-QU-gBr" secondAttribute="trailing" constant="8" id="YeD-z3-A33"/>
                     <constraint firstItem="cCb-Pj-bec" firstAttribute="leading" secondItem="lRG-QU-gBr" secondAttribute="trailing" constant="8" id="aXv-Y8-HoM"/>
                     <constraint firstAttribute="bottom" secondItem="lRG-QU-gBr" secondAttribute="bottom" constant="0.5" id="hAO-CI-27r"/>

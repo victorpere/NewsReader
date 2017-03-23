@@ -26,6 +26,7 @@ class NewsItem {
     var category: String?
     
     var pubDate: Date?
+    var formattedPubDateStr: String?
         
     var visited: Bool {
         get {
