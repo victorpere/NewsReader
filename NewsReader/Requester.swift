@@ -9,8 +9,11 @@
 import Foundation
 
 class Requester : NSObject {
+    
     var delegate: RequesterDelegate!
     var data = Data()
+
+// MARK: - Public methods
     
     func getData(from url: String) {
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
@@ -19,6 +22,8 @@ class Requester : NSObject {
         task.resume()
     }
 }
+
+// MARK: - URLSessionDataDelegate
 
 extension Requester : URLSessionDataDelegate {
     
@@ -37,6 +42,8 @@ extension Requester : URLSessionDataDelegate {
         self.delegate.receivedData(data: data)
     }
 }
+
+// MARK: - Protocol RequesterDelegate
 
 protocol RequesterDelegate {
     func receivedData(data: Data)

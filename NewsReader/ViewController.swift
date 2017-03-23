@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    var reachability: Reachability?
     
     fileprivate var newsFeed = NewsFeed()
     
@@ -18,6 +19,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.reachability = Reachability()
         
         self.tableView.delegate = self
         self.newsFeed.delegate = self
@@ -37,9 +40,16 @@ class ViewController: UIViewController {
 // MARK: - Private methods
     
     private func refreshFeed() {
-        let q = DispatchQueue.global(qos: .userInitiated)
-        q.async {
-            self.newsFeed.getNewsFeed()
+        if !(self.reachability?.isReachable)! {
+            let alert = UIAlertController(title: "No iternet connection available", message: "Cannot refresh feed", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let q = DispatchQueue.global(qos: .userInitiated)
+            q.async {
+                self.newsFeed.getNewsFeed()
+            }
         }
     }
     
@@ -120,21 +130,28 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newsItem = self.newsFeed.newsItems[indexPath.row]
-        
-        let q1 = DispatchQueue(label: "setVisitedQueue")
-        q1.async {
-            newsItem.visited = true
-        }
-        
-        let cell = self.tableView.cellForRow(at: indexPath) as? NewsItemCell
-        cell?.visitedLabel.isHidden = false
-        
         self.tableView.deselectRow(at: indexPath, animated: true)
         
-        let detailScreen = WebViewController(nibName: nil, bundle: nil)
-        detailScreen.url = newsItem.link
-        self.navigationController?.pushViewController(detailScreen, animated: true)
+        if !(self.reachability?.isReachable)! {
+            let alert = UIAlertController(title: "No iternet connection available", message: "Cannot open item", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let newsItem = self.newsFeed.newsItems[indexPath.row]
+            
+            let q1 = DispatchQueue(label: "setVisitedQueue")
+            q1.async {
+                newsItem.visited = true
+            }
+            
+            let cell = self.tableView.cellForRow(at: indexPath) as? NewsItemCell
+            cell?.visitedLabel.isHidden = false
+            
+            let detailScreen = WebViewController(nibName: nil, bundle: nil)
+            detailScreen.url = newsItem.link
+            self.navigationController?.pushViewController(detailScreen, animated: true)
+        }
     }
 }
 
