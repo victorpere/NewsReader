@@ -24,7 +24,7 @@ class NewsReaderTests: XCTestCase {
     
     func testFeed() {
         let newsFeed = NewsFeed()
-        newsFeed.getNewsFeed()
+        newsFeed.refreshNewsFeed()
         
         for newsItem in newsFeed.newsItems {
             XCTAssertNotNil(newsItem.title, "Title is nil")
