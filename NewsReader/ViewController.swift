@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var filterButton: UIButton!
+    var filterButton: UIBarButtonItem!
     
     fileprivate var newsFeed = NewsFeed()
     var reachability: Reachability?
@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
         
         self.tableView.refreshControl = refreshControl
+        self.tableView.tableFooterView = UIView()
         self.tableView.delegate = self
         self.newsFeed.delegate = self
         
@@ -36,11 +37,14 @@ class ViewController: UIViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         
         self.refreshFeed()
+        
+        self.filterButton = UIBarButtonItem(title: "Filter", style: .done, target: self, action: #selector(filterButtonAction))
+        self.navigationItem.rightBarButtonItem = self.filterButton
     }
     
-// MARK: - Actions
-    
-    @IBAction func filterButtonAction(_ sender: Any) {
+    // MARK: - Private methods
+
+    @objc private func filterButtonAction() {
         let filterAlert = UIAlertController(title: "Filter by category:", message: nil, preferredStyle: .actionSheet)
         
         let allCategoriesAction = UIAlertAction(title: "All", style: .default, handler: { (alert) -> Void in
@@ -61,13 +65,10 @@ class ViewController: UIViewController {
         
         let alertController = filterAlert.popoverPresentationController
         alertController?.permittedArrowDirections = .up
-        alertController?.sourceView = self.filterButton
-        alertController?.sourceRect = self.filterButton.bounds
+        alertController?.barButtonItem = self.filterButton
         
         self.present(filterAlert, animated: true, completion: nil)
     }
-    
-// MARK: - Private methods
     
     @objc private func refreshFeed() {
         // check for internet connectivity
@@ -80,7 +81,7 @@ class ViewController: UIViewController {
         } else {
             let q = DispatchQueue.global(qos: .userInitiated)
             q.async {
-                self.newsFeed.getNewsFeed()
+                self.newsFeed.refreshNewsFeed()
             }
         }
     }

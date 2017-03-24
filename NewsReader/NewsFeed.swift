@@ -36,9 +36,9 @@ class NewsFeed : NSObject {
         }
     }
     
-// MARK: - Public methods
+    // MARK: - Public methods
     
-    func getNewsFeed() {
+    func refreshNewsFeed() {
         let q = DispatchQueue(label: "getNewsFeedQueue")
         q.async {
             self.newsItems.removeAll()
