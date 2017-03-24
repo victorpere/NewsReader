@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nj5-gO-4Ve">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="hNa-Qu-ZlI"/>
@@ -33,30 +33,31 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="nj5-gO-4Ve" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="6a0-Fu-k3i"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="nj5-gO-4Ve" secondAttribute="bottom" constant="20" id="86o-9l-feW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="nj5-gO-4Ve" secondAttribute="trailing" constant="-16" id="HRi-IT-al6"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="nj5-gO-4Ve" secondAttribute="bottom" id="LWQ-Eb-kMI"/>
                             <constraint firstItem="nj5-gO-4Ve" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-64" id="jaV-L4-Gfq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YyN-Ms-IH5">
                         <barButtonItem key="rightBarButtonItem" style="done" id="rgp-LV-IQC">
-                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wf4-7O-fqC">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Wf4-7O-fqC">
                                 <rect key="frame" x="276" y="7" width="83" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Refresh"/>
+                                <state key="normal" title="Filter"/>
                                 <connections>
-                                    <action selector="refreshButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YMN-La-L8E"/>
+                                    <action selector="filterButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wxH-b3-hjy"/>
                                 </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="filterButton" destination="Wf4-7O-fqC" id="mjw-I2-Xbq"/>
                         <outlet property="tableView" destination="nj5-gO-4Ve" id="bq0-kv-pfh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="950" y="123"/>
+            <point key="canvasLocation" x="949.60000000000002" y="122.78860569715144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a2p-UK-0kD">

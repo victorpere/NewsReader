@@ -16,13 +16,7 @@ class NewsFeed : NSObject {
     var delegate: NewsFeedDelegate?
     
     var title: String?
-    var link: String?
-    var desc: String?
-    var lastBuildDate: Date?
-    var imageURL: String?
-    var image: UIImage?
-    var language: String?
-    var copyright: String?
+    var filter: Category?
     
     var newsItems = [NewsItem]()
     
@@ -74,6 +68,9 @@ extension NewsFeed : XMLParserDelegate {
     
     func parserDidEndDocument(_ parser: XMLParser) {
         self.lastUpdate = Date()
+        if self.filter != nil {
+            self.newsItems = self.newsItems.filter { $0.category == self.filter }
+        }
         self.delegate?.feedUpdated()
     }
     
@@ -108,15 +105,12 @@ extension NewsFeed : XMLParserDelegate {
             switch elementName {
             case "item":
                 newsItems.sort { $0.pubDate! > $1.pubDate! }
-                
             case "title":
                 newsItem.title = self.xmlBuffer
             case "link":
                 newsItem.link  = self.xmlBuffer
-                let q = DispatchQueue(label: "categoryQueue")
-                q.async {
-                    newsItem.category = newsItem.link!.category()
-                }
+                newsItem.categoryStr = newsItem.link!.category() != nil ? newsItem.link!.category() : "general"
+                newsItem.category = Category(rawValue: newsItem.categoryStr!)
             case "description":
                 newsItem.description = self.xmlBuffer
             case "author":
