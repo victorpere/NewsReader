@@ -23,8 +23,7 @@ class NewsItem {
     var imageURL: String?
     var imageCaption: String?
     var image: UIImage?
-    var categoryStr: String?
-    var category: Category?
+    var category: String?
     
     var pubDate: Date?
     var formattedPubDateStr: String?

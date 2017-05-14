@@ -37,15 +37,13 @@ class ViewController: UIViewController {
         
         self.refreshFeed()
         
-        let filterButton = UIBarButtonItem(title: "Filter", style: .done, target: self, action: #selector(filterButtonAction(_:)))
-        self.navigationItem.rightBarButtonItem = filterButton
-        
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.height - 30, width: self.view.frame.width, height: 30))
-        let toolBarButton = UIBarButtonItem(title: "Feed", style: .plain, target: self, action: #selector(selectFeed(_:)))
-        toolBar.setItems([toolBarButton], animated: true)
-        self.view.addSubview(toolBar)
+        let feedButton = UIBarButtonItem(title: "Feed", style: .plain, target: self, action: #selector(selectFeed(_:)))
+        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterButtonAction(_:)))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil);
         
-        //self.title = self.newsFeed.title
+        toolBar.setItems([feedButton, flexibleSpace, filterButton], animated: true)
+        self.view.addSubview(toolBar)
     }
     
     // MARK: - Private methods
@@ -59,8 +57,8 @@ class ViewController: UIViewController {
         } )
         filterAlert.addAction(allCategoriesAction)
         
-        for category in Category.categories {
-            let categoryAction = UIAlertAction(title: category.rawValue, style: .default, handler: { (alert) -> Void in
+        for category in self.newsFeed.categories {
+            let categoryAction = UIAlertAction(title: category, style: .default, handler: { (alert) -> Void in
                 self.newsFeed.filter = category
                 self.refreshFeed()
             } )
@@ -98,6 +96,7 @@ class ViewController: UIViewController {
         for (i, feed) in Config.feeds.enumerated() {
             let feedAction = UIAlertAction(title: feed["Description"], style: .default, handler: { (alert) -> Void in
                 self.newsFeed.lastFeed = i
+                self.newsFeed.filter = nil
                 self.refreshFeed()
             } )
             feedAlert.addAction(feedAction)
@@ -139,8 +138,8 @@ extension ViewController: UITableViewDataSource {
             cell!.descriptionLabel.text = newsItem.description
             cell!.dateLabel.text = newsItem.formattedPubDateStr
             
-            if newsItem.categoryStr != nil {
-                cell!.categoryLabel.text = newsItem.categoryStr
+            if newsItem.category != nil {
+                cell!.categoryLabel.text = newsItem.category
                 cell!.categoryLabel.isHidden = false
             } else {
                 cell!.categoryLabel.isHidden = true

@@ -13,10 +13,12 @@ class NewsFeed : NSObject {
     let userDefaults = UserDefaults.standard
 
     var delegate: NewsFeedDelegate?
-    var filter: Category?
-    var newsItems = [NewsItem]()
+    var filter: String?
     var xmlBuffer: String!
+
     var dateFormatter = DateFormatter()
+    var categories = [String]()
+    var newsItems = [NewsItem]()
     
     var lastUpdate: Date {
         get {
@@ -96,7 +98,7 @@ extension NewsFeed : RequesterDelegate {
 
 extension NewsFeed : XMLParserDelegate {
     func parserDidStartDocument(_ parser: XMLParser) {
-        
+        categories.removeAll()
     }
     
     func parserDidEndDocument(_ parser: XMLParser) {
@@ -142,8 +144,10 @@ extension NewsFeed : XMLParserDelegate {
                 newsItem.title = self.xmlBuffer
             case "link":
                 newsItem.link  = self.xmlBuffer
-                newsItem.categoryStr = newsItem.link!.category() != nil ? newsItem.link!.category() : "general"
-                newsItem.category = Category(rawValue: newsItem.categoryStr!)
+                newsItem.category = newsItem.link!.category() != nil ? newsItem.link!.category() : "general"
+                if (categories.filter{ $0 == newsItem.category }.count == 0) {
+                    categories.append(newsItem.category!)
+                }
             case "description":
                 newsItem.description = self.xmlBuffer
             case "author":
