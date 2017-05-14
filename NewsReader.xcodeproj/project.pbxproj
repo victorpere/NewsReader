@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57322F1C1E854B2300D7A031 /* ctvnews.xml in Resources */ = {isa = PBXBuildFile; fileRef = 57322F1A1E854B2300D7A031 /* ctvnews.xml */; };
-		57322F1D1E854B2300D7A031 /* ctvnews2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 57322F1B1E854B2300D7A031 /* ctvnews2.xml */; };
 		57897FFC1E8593C100B1D4A6 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57897FFB1E8593C100B1D4A6 /* Config.swift */; };
 		578B1C931E81EF65008B8381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1C921E81EF65008B8381 /* AppDelegate.swift */; };
 		578B1C951E81EF65008B8381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1C941E81EF65008B8381 /* ViewController.swift */; };
@@ -43,8 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		57322F1A1E854B2300D7A031 /* ctvnews.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = ctvnews.xml; path = ../../../Downloads/ctvnews.xml; sourceTree = "<group>"; };
-		57322F1B1E854B2300D7A031 /* ctvnews2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = ctvnews2.xml; path = ../../../Downloads/ctvnews2.xml; sourceTree = "<group>"; };
 		57897FFB1E8593C100B1D4A6 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		578B1C8F1E81EF65008B8381 /* NewsReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		578B1C921E81EF65008B8381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,8 +85,6 @@
 		57322F181E84C40500D7A031 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				57322F1A1E854B2300D7A031 /* ctvnews.xml */,
-				57322F1B1E854B2300D7A031 /* ctvnews2.xml */,
 				578B1CA11E81EF65008B8381 /* Info.plist */,
 				578B1C961E81EF65008B8381 /* Main.storyboard */,
 				578B1C9E1E81EF65008B8381 /* LaunchScreen.storyboard */,
@@ -259,9 +253,7 @@
 				578B1CA01E81EF65008B8381 /* LaunchScreen.storyboard in Resources */,
 				578B1CC81E833FB5008B8381 /* NewsItemCell.xib in Resources */,
 				578B1C9D1E81EF65008B8381 /* Assets.xcassets in Resources */,
-				57322F1C1E854B2300D7A031 /* ctvnews.xml in Resources */,
 				578B1C981E81EF65008B8381 /* Main.storyboard in Resources */,
-				57322F1D1E854B2300D7A031 /* ctvnews2.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

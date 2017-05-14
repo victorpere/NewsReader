@@ -11,14 +11,10 @@ import UIKit
 
 class NewsFeed : NSObject {
     let userDefaults = UserDefaults.standard
-    var feedURL = Config.feeds[0]["Url"] // "http://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009"
-    var title = Config.feeds[0]["Description"]
-    
+
     var delegate: NewsFeedDelegate?
     var filter: Category?
-    
     var newsItems = [NewsItem]()
-    
     var xmlBuffer: String!
     var dateFormatter = DateFormatter()
     
@@ -32,6 +28,31 @@ class NewsFeed : NSObject {
         set(value) {
             self.userDefaults.setValue(value, forKey: "lastUpdate")
             self.userDefaults.synchronize()
+        }
+    }
+    
+    var lastFeed: Int {
+        get {
+            if let lastFeed = self.userDefaults.value(forKey: "LastFeed") as? Int {
+                return lastFeed
+            }
+            return 0
+        }
+        set(value) {
+            self.userDefaults.setValue(value, forKey: "LastFeed")
+            self.userDefaults.synchronize()
+        }
+    }
+    
+    var title: String? {
+        get {
+            return Config.feeds[lastFeed]["Description"]
+        }
+    }
+    
+    private var feedURL: String? {
+        get {
+            return Config.feeds[lastFeed]["Url"]
         }
     }
     

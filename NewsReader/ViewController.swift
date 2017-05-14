@@ -95,10 +95,9 @@ class ViewController: UIViewController {
     @objc private func selectFeed(_ sender: UIBarButtonItem) {
         let feedAlert = UIAlertController(title: "Select feed:", message: nil, preferredStyle: .actionSheet)
         
-        for feed in Config.feeds {
+        for (i, feed) in Config.feeds.enumerated() {
             let feedAction = UIAlertAction(title: feed["Description"], style: .default, handler: { (alert) -> Void in
-                self.newsFeed.feedURL = feed["Url"]
-                self.newsFeed.title = feed["Description"]
+                self.newsFeed.lastFeed = i
                 self.refreshFeed()
             } )
             feedAlert.addAction(feedAction)
