@@ -11,16 +11,15 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var filterButton: UIBarButtonItem!
     
     fileprivate var newsFeed = NewsFeed()
     var reachability: Reachability?
     
-// MARK: - View methods
+    // MARK: - View methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Top Stories"
+        //self.title = "Top Stories"
         
         self.reachability = Reachability()
         
@@ -38,13 +37,20 @@ class ViewController: UIViewController {
         
         self.refreshFeed()
         
-        self.filterButton = UIBarButtonItem(title: "Filter", style: .done, target: self, action: #selector(filterButtonAction))
-        self.navigationItem.rightBarButtonItem = self.filterButton
+        let filterButton = UIBarButtonItem(title: "Filter", style: .done, target: self, action: #selector(filterButtonAction(_:)))
+        self.navigationItem.rightBarButtonItem = filterButton
+        
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.height - 30, width: self.view.frame.width, height: 30))
+        let toolBarButton = UIBarButtonItem(title: "Feed", style: .plain, target: self, action: #selector(selectFeed(_:)))
+        toolBar.setItems([toolBarButton], animated: true)
+        self.view.addSubview(toolBar)
+        
+        //self.title = self.newsFeed.title
     }
     
     // MARK: - Private methods
 
-    @objc private func filterButtonAction() {
+    @objc private func filterButtonAction(_ sender: UIBarButtonItem) {
         let filterAlert = UIAlertController(title: "Filter by category:", message: nil, preferredStyle: .actionSheet)
         
         let allCategoriesAction = UIAlertAction(title: "All", style: .default, handler: { (alert) -> Void in
@@ -65,7 +71,7 @@ class ViewController: UIViewController {
         
         let alertController = filterAlert.popoverPresentationController
         alertController?.permittedArrowDirections = .up
-        alertController?.barButtonItem = self.filterButton
+        alertController?.barButtonItem = sender
         
         self.present(filterAlert, animated: true, completion: nil)
     }
@@ -86,6 +92,26 @@ class ViewController: UIViewController {
         }
     }
     
+    @objc private func selectFeed(_ sender: UIBarButtonItem) {
+        let feedAlert = UIAlertController(title: "Select feed:", message: nil, preferredStyle: .actionSheet)
+        
+        for feed in Config.feeds {
+            let feedAction = UIAlertAction(title: feed["Description"], style: .default, handler: { (alert) -> Void in
+                self.newsFeed.feedURL = feed["Url"]
+                self.newsFeed.title = feed["Description"]
+                self.refreshFeed()
+            } )
+            feedAlert.addAction(feedAction)
+        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel) { (alert) -> Void in }
+        feedAlert.addAction(cancelButton)
+        
+        let alertController = feedAlert.popoverPresentationController
+        alertController?.permittedArrowDirections = .down
+        alertController?.barButtonItem = sender
+        
+        self.present(feedAlert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -201,6 +227,7 @@ extension ViewController: NewsFeedDelegate {
             let refreshControl = self.tableView.refreshControl!
             refreshControl.attributedTitle = NSAttributedString(string: "Last refreshed: \(self.newsFeed.lastUpdate.formattedString())")
             refreshControl.endRefreshing()
+            self.title = self.newsFeed.title
             self.tableView.reloadData()
         }
     }

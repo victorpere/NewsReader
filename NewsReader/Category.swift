@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Category: String {
+public enum Category: String {
     case general = "general"
     case canada = "canada"
     case world = "world"
@@ -18,5 +18,5 @@ enum Category: String {
     case scitech = "sci-tech"
     case business = "business"
     
-    static let categories = [business, canada, health, politics, scitech, sports, world]
+    public static let categories = [business, canada, health, politics, scitech, sports, world]
 }

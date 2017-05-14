@@ -176,6 +176,7 @@ public extension Reachability {
     
     // MARK: - *** Connection test methods ***
     var isReachable: Bool {
+        //return true
         
         guard isReachableFlagSet else { return false }
         

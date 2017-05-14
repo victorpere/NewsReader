@@ -13,7 +13,7 @@ class WebViewController: UIViewController {
     var url: String!
     var activityIndicator: UIActivityIndicatorView!
 
-// MARK: - View methods
+    // MARK: - View methods
     
     override func viewDidLoad() {
         super.viewDidLoad()

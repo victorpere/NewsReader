@@ -11,11 +11,10 @@ import UIKit
 
 class NewsFeed : NSObject {
     let userDefaults = UserDefaults.standard
-    let feedURL = "http://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009"
+    var feedURL = Config.feeds[0]["Url"] // "http://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009"
+    var title = Config.feeds[0]["Description"]
     
     var delegate: NewsFeedDelegate?
-    
-    var title: String?
     var filter: Category?
     
     var newsItems = [NewsItem]()
@@ -44,7 +43,20 @@ class NewsFeed : NSObject {
             self.newsItems.removeAll()
             let requester = Requester()
             requester.delegate = self
-            requester.getData(from: self.feedURL)
+            requester.getData(from: self.feedURL!)
+            
+            /*
+            var xmlParser: XMLParser
+            
+            let path = Bundle.main.path(forResource: "ctvnews", ofType: "xml")
+            if path != nil {
+                xmlParser = XMLParser(contentsOf: URL(fileURLWithPath: path!))!
+                xmlParser.delegate = self
+                xmlParser.parse()
+            } else {
+                print("Failed to find MyFile.xml")
+            }
+            */
         }
     }
 }
@@ -136,7 +148,8 @@ extension NewsFeed : XMLParserDelegate {
             // parsing feed header
             switch elementName {
             case "title":
-                self.title = self.xmlBuffer
+                //self.title = self.xmlBuffer
+                break
             default:
                 break
             }

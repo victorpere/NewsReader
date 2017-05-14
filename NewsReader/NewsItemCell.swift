@@ -8,8 +8,7 @@
 
 import UIKit
 
-class NewsItemCell: UITableViewCell
-{
+class NewsItemCell: UITableViewCell {
     @IBOutlet weak var newsImageView: UIImageView!
     @IBOutlet weak var visitedImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
