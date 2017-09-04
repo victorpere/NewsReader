@@ -97,6 +97,7 @@ class ViewController: UIViewController {
             let feedAction = UIAlertAction(title: feed["Description"], style: .default, handler: { (alert) -> Void in
                 self.newsFeed.lastFeed = i
                 self.newsFeed.filter = nil
+                self.tableView.setContentOffset(CGPoint(x: 0, y: 0 - UIApplication.shared.statusBarFrame.size.height - (self.navigationController?.navigationBar.frame.size.height)!), animated: false)
                 self.refreshFeed()
             } )
             feedAlert.addAction(feedAction)
