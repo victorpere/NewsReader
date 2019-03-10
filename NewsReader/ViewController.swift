@@ -39,7 +39,7 @@ class ViewController: UIViewController {
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.height - 30, width: self.view.frame.width, height: 30))
         let feedButton = UIBarButtonItem(title: "Feed", style: .plain, target: self, action: #selector(selectFeed(_:)))
-        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterButtonAction(_:)))
+        let filterButton = UIBarButtonItem(title: "Category", style: .plain, target: self, action: #selector(filterButtonAction(_:)))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil);
         
         toolBar.setItems([feedButton, flexibleSpace, filterButton], animated: true)
@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     // MARK: - Private methods
 
     @objc private func filterButtonAction(_ sender: UIBarButtonItem) {
-        let filterAlert = UIAlertController(title: "Filter by category:", message: nil, preferredStyle: .actionSheet)
+        let filterAlert = UIAlertController(title: "Select category:", message: nil, preferredStyle: .actionSheet)
         
         let allCategoriesAction = UIAlertAction(title: "All", style: .default, handler: { (alert) -> Void in
             self.newsFeed.filter = nil
