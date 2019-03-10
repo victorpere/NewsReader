@@ -10,11 +10,13 @@ import Foundation
 
 extension String {
     public func category() -> String? {
-        let startIndex = self.index(self.startIndex, offsetBy: 22)
         let endIndex = self.range(of: "/", options: .backwards)?.lowerBound
+        let categoryLink = self.substring(with: self.startIndex..<endIndex!)
+        let startIndex = categoryLink.range(of: "/", options: .backwards)?.upperBound
         let range = startIndex..<endIndex!
+        let category = self.substring(with: range)
         
-        return self.substring(with: range)
+        return category.capitalizeFirst()
     }
     
     public func date() -> Date? {
@@ -25,5 +27,10 @@ extension String {
         let range = start..<end
         let datestring = self.substring(with: range)
         return dateFormatter.date(from: datestring)
+    }
+    
+    public func capitalizeFirst() -> String? {
+        let firstLetter = self.prefix(1).uppercased()
+        return firstLetter + self.suffix(self.count - 1)
     }
 }
