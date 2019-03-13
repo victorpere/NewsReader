@@ -9,7 +9,10 @@
 import Foundation
 
 public class Config {
-    
+    public static let providers = [
+        ["Name": "CTV"],
+        ["Name": "CBC"]
+    ]
     public static let feeds = [
         ["Description": "Top Stories", "Url": "https://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009"],
         ["Description": "Canada", "Url": "https://www.ctvnews.ca/rss/ctvnews-ca-canada-public-rss-1.822284"],

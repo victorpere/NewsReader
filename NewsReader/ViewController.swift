@@ -210,8 +210,11 @@ extension ViewController: UITableViewDelegate {
             let cell = self.tableView.cellForRow(at: indexPath) as? NewsItemCell
             cell?.visitedImage.isHidden = false
             
-            let detailScreen = WebViewController(nibName: nil, bundle: nil)
-            detailScreen.url = newsItem.link
+            //let detailScreen = WebViewController(nibName: nil, bundle: nil)
+            //detailScreen.url = newsItem.link
+            
+            let detailScreen = StoryViewController(url: newsItem.link!)
+            detailScreen.articleImage = newsItem.image
             self.navigationController?.pushViewController(detailScreen, animated: true)
         }
     }
