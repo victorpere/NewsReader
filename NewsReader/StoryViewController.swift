@@ -22,7 +22,7 @@ class StoryViewController: UIViewController {
     var articleBodyLabel: UILabel!
     var articleImage: UIImage!
     
-    let sidemargin: Int = 5
+    let sidemargin: CGFloat = 5.0
     
     // MARK: - Initializers
     
@@ -50,18 +50,18 @@ class StoryViewController: UIViewController {
         self.articleImageView.image = self.articleImage
         self.contentView.addSubview(self.articleImageView)
         
-        self.articleHeadlineLabel = UILabel(frame: CGRect(x: 5, y: self.articleImageView.frame.origin.y + self.articleImageView.frame.height, width: self.view.frame.width, height: 0))
+        self.articleHeadlineLabel = UILabel(frame: CGRect(x: self.sidemargin, y: self.articleImageView.frame.origin.y + self.articleImageView.frame.height, width: self.view.frame.width - self.sidemargin, height: 0))
         self.articleHeadlineLabel.backgroundColor = .white
         self.articleHeadlineLabel.lineBreakMode = .byWordWrapping
         self.articleHeadlineLabel.numberOfLines = 0
-        self.articleHeadlineLabel.font = UIFont.systemFont(ofSize: 24.0)
+        self.articleHeadlineLabel.font = UIFont.systemFont(ofSize: CGFloat(Config.fontSizeArticleHeadline))
         self.contentView.addSubview(self.articleHeadlineLabel)
         
-        self.articleBodyLabel = UILabel(frame: CGRect(x: 5, y: self.articleHeadlineLabel.frame.origin.y + self.articleHeadlineLabel.frame.height, width: self.view.frame.width, height: 0))
+        self.articleBodyLabel = UILabel(frame: CGRect(x: self.sidemargin, y: self.articleHeadlineLabel.frame.origin.y + self.articleHeadlineLabel.frame.height, width: self.view.frame.width - self.sidemargin, height: 0))
         self.articleBodyLabel.backgroundColor = .white
         self.articleBodyLabel.lineBreakMode = .byWordWrapping
         self.articleBodyLabel.numberOfLines = 0
-        self.articleBodyLabel.font = UIFont.systemFont(ofSize: 16.0)
+        self.articleBodyLabel.font = UIFont.systemFont(ofSize: CGFloat(Config.fontSizeArticleBody))
         self.contentView.addSubview(self.articleBodyLabel)
         
         self.scrollView.addSubview(contentView)
