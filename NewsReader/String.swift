@@ -23,7 +23,7 @@ extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy HH:mm:ss"
         let start = self.index(self.startIndex, offsetBy: 5)
-        let end = self.index(self.endIndex, offsetBy: -6)
+        let end = self.index(self.startIndex, offsetBy: 25)
         let range = start..<end
         let datestring = self.substring(with: range)
         return dateFormatter.date(from: datestring)

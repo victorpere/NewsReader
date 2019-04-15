@@ -93,8 +93,8 @@ class ViewController: UIViewController {
     @objc private func selectFeed(_ sender: UIBarButtonItem) {
         let feedAlert = UIAlertController(title: "Select feed:", message: nil, preferredStyle: .actionSheet)
         
-        for (i, feed) in Config.feeds.enumerated() {
-            let feedAction = UIAlertAction(title: feed["Description"], style: .default, handler: { (alert) -> Void in
+        for (i, feed) in Config.topics.enumerated() {
+            let feedAction = UIAlertAction(title: feed, style: .default, handler: { (alert) -> Void in
                 self.newsFeed.lastFeed = i
                 self.newsFeed.filter = nil
                 self.tableView.setContentOffset(CGPoint(x: 0, y: 0 - UIApplication.shared.statusBarFrame.size.height - (self.navigationController?.navigationBar.frame.size.height)!), animated: false)
@@ -138,6 +138,7 @@ extension ViewController: UITableViewDataSource {
             cell!.titleLabel.text = newsItem.title
             cell!.descriptionLabel.text = newsItem.description
             cell!.dateLabel.text = newsItem.formattedPubDateStr
+            cell!.providerImage.image = UIImage(named: Config.providerImages[newsItem.provider!]!)
             
             if newsItem.category != nil {
                 cell!.categoryLabel.text = newsItem.category
@@ -215,6 +216,7 @@ extension ViewController: UITableViewDelegate {
             
             let detailScreen = StoryViewController(url: newsItem.link!)
             detailScreen.articleImage = newsItem.image
+            detailScreen.provider = newsItem.provider
             self.navigationController?.pushViewController(detailScreen, animated: true)
         }
     }

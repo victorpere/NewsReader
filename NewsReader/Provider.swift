@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum Provider: Int {
+public enum Provider: Int {
     case ctv, cbc
 }

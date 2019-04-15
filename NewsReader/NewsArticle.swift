@@ -19,8 +19,8 @@ class NewsArticle {
     
     init(html: String, provider: Provider) {
         guard let document: Document = try? SwiftSoup.parse(html) else { return }
-        self.headline = self.textFrom(document: document, cssClass: "articleHeadline")
-        self.body = self.textFrom(document: document, cssClass: "articleBody")
+        self.headline = self.textFrom(document: document, cssClass: Config.classArticleHeadline[provider]!)
+        self.body = self.textFrom(document: document, cssClass: Config.classArticleBody[provider]!)
         self.provider = provider
         self.document = document
     }

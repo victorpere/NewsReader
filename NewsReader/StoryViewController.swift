@@ -21,6 +21,7 @@ class StoryViewController: UIViewController {
     var articleHeadlineLabel: UILabel!
     var articleBodyLabel: UILabel!
     var articleImage: UIImage!
+    var provider: Provider!
     
     let sidemargin: CGFloat = 5.0
     
@@ -79,7 +80,7 @@ extension StoryViewController: RequesterDelegate {
         let q1 = DispatchQueue.global(qos: .userInitiated)
         q1.async {
             let stringData = String(data: data, encoding: .utf8)!
-            self.newsArticle = NewsArticle(html: stringData, provider: .ctv)
+            self.newsArticle = NewsArticle(html: stringData, provider: self.provider)
             DispatchQueue.main.async {
                 self.articleHeadlineLabel.text = self.newsArticle?.headline
                 self.articleBodyLabel.text = self.newsArticle?.body
