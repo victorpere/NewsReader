@@ -62,13 +62,16 @@ extension NewsFeedLoader : XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         xmlBuffer = ""
         
-        if elementName == "item" {
+        switch elementName {
+        case "item":
             // start new item
             self.newsItems.append(NewsItem())
-        }
-        
-        if elementName == "enclosure" && newsItems.count > 0 {
-            newsItems[newsItems.count - 1].imageURL = attributeDict["url"]
+        case "enclosure","media:content","media:thumbnail":
+            if newsItems.count > 0 {
+                newsItems[newsItems.count - 1].imageURL = attributeDict["url"]
+            }
+        default:
+            break
         }
     }
     
@@ -94,7 +97,7 @@ extension NewsFeedLoader : XMLParserDelegate {
                 newsItem.title = self.xmlBuffer
             case "link":
                 newsItem.link  = self.xmlBuffer
-                newsItem.category = newsItem.link!.category() != nil ? newsItem.link!.category() : "general"
+                newsItem.category = newsItem.link!.categoryUrl() != nil ? newsItem.link!.categoryUrl() : "General"
                 if (categories.filter{ $0 == newsItem.category }.count == 0) {
                     categories.append(newsItem.category!)
                 }
@@ -126,6 +129,8 @@ extension NewsFeedLoader : XMLParserDelegate {
                 newsItem.modDateStr = self.xmlBuffer
             case "enclosure":
                 newsItem.imageCaption = self.xmlBuffer
+            case "category":
+                newsItem.category = self.xmlBuffer.category()
             default:
                 break
             }

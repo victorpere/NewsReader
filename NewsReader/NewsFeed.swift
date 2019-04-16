@@ -95,6 +95,7 @@ extension NewsFeed : NewsFeedLoaderDelegate {
         self.newsItems.sort { $0.pubDate! > $1.pubDate! }
         self.urlsLoaded += 1
 
+        self.lastUpdate = Date()
         self.delegate?.feedUpdated()
     }
 }

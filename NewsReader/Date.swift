@@ -11,7 +11,7 @@ import Foundation
 extension Date {
     public func formattedString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMMM dd, yyyy h:mma"
+        dateFormatter.dateFormat = "EEEE, MMMM dd, yyyy h:mm a"
         return dateFormatter.string(from: self)
     }
 }

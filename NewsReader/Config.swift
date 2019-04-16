@@ -13,7 +13,10 @@ public class Config {
     public static let fontSizeArticleBody = 16.0
     
     public static let providerImages = [
-        Provider.ctv: "providerImageCTV", Provider.cbc: "providerImageCBC"
+        Provider.ctv: "providerImageCTV",
+        Provider.cbc: "providerImageCBC",
+        Provider.guardian: "providerImageGuardian",
+        Provider.bbc: "providerImageBBC"
     ]
     
     public static let newsFeeds = [
@@ -21,11 +24,12 @@ public class Config {
             "Top Stories": "https://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009",
             "Canada": "https://www.ctvnews.ca/rss/ctvnews-ca-canada-public-rss-1.822284",
             "World": "https://www.ctvnews.ca/rss/ctvnews-ca-world-public-rss-1.822289",
-            "Entertainment": "https://www.ctvnews.ca/rss/ctvnews-ca-entertainment-public-rss-1.822292",
+            "Arts & Entertainment": "https://www.ctvnews.ca/rss/ctvnews-ca-entertainment-public-rss-1.822292",
             "Politics": "https://www.ctvnews.ca/rss/ctvnews-ca-politics-public-rss-1.822302",
             "Lifestyle": "https://www.ctvnews.ca/rss/lifestyle/ctv-news-lifestyle-1.3407722",
             "Business": "https://www.ctvnews.ca/rss/business/ctv-news-business-headlines-1.867648",
-            "Science & Tech": "https://www.ctvnews.ca/rss/ctvnews-ca-sci-tech-public-rss-1.822295",
+            "Science": "https://www.ctvnews.ca/rss/ctvnews-ca-sci-tech-public-rss-1.822295",
+            "Technology": "https://www.ctvnews.ca/rss/ctvnews-ca-sci-tech-public-rss-1.822295",
             "Sports": "https://www.ctvnews.ca/rss/sports/ctv-news-sports-1.3407726",
             "Health": "https://www.ctvnews.ca/rss/ctvnews-ca-health-public-rss-1.822299",
             "Autos": "https://www.ctvnews.ca/rss/autos/ctv-news-autos-1.867636",
@@ -39,26 +43,51 @@ public class Config {
             "Politics": "https://rss.cbc.ca/lineup/politics.xml",
             "Business": "https://rss.cbc.ca/lineup/business.xml",
             "Health": "https://rss.cbc.ca/lineup/health.xml",
-            "Entertainment": "https://rss.cbc.ca/lineup/arts.xml",
-            "Science & Tech": "https://rss.cbc.ca/lineup/technology.xml",
+            "Arts & Entertainment": "https://rss.cbc.ca/lineup/arts.xml",
+            "Technology": "https://rss.cbc.ca/lineup/technology.xml",
             "Offbeat": "https://rss.cbc.ca/lineup/offbeat.xml",
             "Indigenous": "https://www.cbc.ca/cmlink/rss-cbcaboriginal",
             "Sports": "https://rss.cbc.ca/lineup/sports.xml",
             "Toronto": "https://rss.cbc.ca/lineup/canada-toronto.xml",
-            "In-depth": "https://rss.cbc.ca/lineup/thenational.xml"
+            "In-depth": "https://rss.cbc.ca/lineup/thenational./Users/victor/Documents/NewsReader/NewsReader.xcodeprojxml"
         ]
-        
+        ,
+        Provider.guardian: [
+            "Top Stories": "https://www.theguardian.com/theguardian/mainsection/topstories/rss",
+            "World": "https://www.theguardian.com/world/rss",
+            "Opinion": "https://www.theguardian.com/uk/commentisfree/rss",
+            "Sports": "https://www.theguardian.com/uk/sport/rss",
+            "Arts & Entertainment": "https://www.theguardian.com/uk/culture/rss",
+            //"Lifestyle": "https://www.theguardian.com/uk/lifeandstyle/rss",
+            "Science": "https://www.theguardian.com/science/rss",
+            "Technology": "https://www.theguardian.com/uk/technology/rss",
+            "Business": "https://www.theguardian.com/uk/business/rss",
+            "Health": "https://www.theguardian.com/lifeandstyle/health-and-wellbeing/rss"
+        ]
+        ,
+        Provider.bbc: [
+            "Top Stories": "http://feeds.bbci.co.uk/news/rss.xml",
+            "World": "http://feeds.bbci.co.uk/news/world/rss.xml",
+            "Business": "http://feeds.bbci.co.uk/news/business/rss.xml",
+            "Politics": "http://feeds.bbci.co.uk/news/politics/rss.xml",
+            "Health": "http://feeds.bbci.co.uk/news/health/rss.xml",
+            "Science": "http://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
+            "Technology": "http://feeds.bbci.co.uk/news/technology/rss.xml",
+            "Arts & Entertainment": "http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"
+        ]
     ]
     
     public static let topics = [
         "Top Stories",
         "Canada",
         "World",
-        "Entertainment",
+        "Arts & Entertainment",
         "Politics",
+        "Opinion",
         "Lifestyle",
         "Business",
-        "Science & Tech",
+        "Science",
+        "Technology",
         "Sports",
         "Health",
         "Autos",
@@ -70,11 +99,15 @@ public class Config {
     
     public static let classArticleHeadline : [Provider: String] = [
         Provider.ctv: "articleHeadline",
-        Provider.cbc: "detailHeadline"
+        Provider.cbc: "detailHeadline",
+        Provider.guardian: "content__headline",
+        Provider.bbc: "story-body__h1"
     ]
     
     public static let classArticleBody : [Provider: String] = [
         Provider.ctv: "articleBody",
-        Provider.cbc: "story"
+        Provider.cbc: "story",
+        Provider.guardian: "content__article-body",
+        Provider.bbc: "story-body__inner"
     ]
 }
