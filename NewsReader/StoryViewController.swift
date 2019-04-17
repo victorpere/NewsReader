@@ -67,9 +67,19 @@ class StoryViewController: UIViewController {
         
         self.scrollView.addSubview(contentView)
         
+        let shareButton = UIBarButtonItem(title: "Share", style: .plain, target: self, action: #selector(shareButtonAction(_:)))
+        self.navigationItem.rightBarButtonItem = shareButton
+        
         let requester = Requester()
         requester.delegate = self
         requester.getData(from: self.url)
+    }
+    
+    // MARK: - Private methods
+    
+    @objc private func shareButtonAction(_ sender: UIBarButtonItem) {
+        let activityViewController = UIActivityViewController(activityItems: [self.url], applicationActivities: nil)
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }
 
