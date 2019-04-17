@@ -15,6 +15,9 @@ class ViewController: UIViewController {
     fileprivate var newsFeed = NewsFeed()
     var reachability: Reachability?
     
+    let toolBarHeight: CGFloat = 30.0
+    let rowHeight: CGFloat = 160.0
+    
     // MARK: - View methods
     
     override func viewDidLoad() {
@@ -32,12 +35,12 @@ class ViewController: UIViewController {
         self.tableView.delegate = self
         self.newsFeed.delegate = self
         
-        self.tableView.estimatedRowHeight = 160;
+        self.tableView.estimatedRowHeight = self.rowHeight;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         
         self.refreshFeed()
         
-        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.height - 30, width: self.view.frame.width, height: 30))
+        let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.height - self.toolBarHeight, width: self.view.frame.width, height: self.toolBarHeight))
         let feedButton = UIBarButtonItem(title: "Feed", style: .plain, target: self, action: #selector(selectFeed(_:)))
         let filterButton = UIBarButtonItem(title: "Category", style: .plain, target: self, action: #selector(filterButtonAction(_:)))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil);
@@ -233,6 +236,7 @@ extension ViewController: NewsFeedDelegate {
             refreshControl.endRefreshing()
             self.title = self.newsFeed.title
             self.tableView.reloadData()
+            self.tableView.contentSize = CGSize(width: self.tableView.frame.width, height: self.tableView.contentSize.height + self.toolBarHeight)
         }
     }
 }
