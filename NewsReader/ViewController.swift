@@ -9,14 +9,18 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    // MARK: - Constants
+    
+    let toolBarHeight: CGFloat = 30.0
+    let rowHeight: CGFloat = 160.0
+    
+    // MARK: - Variables
 
     @IBOutlet weak var tableView: UITableView!
     
     fileprivate var newsFeed = NewsFeed()
     var reachability: Reachability?
-    
-    let toolBarHeight: CGFloat = 30.0
-    let rowHeight: CGFloat = 160.0
     
     // MARK: - View methods
     
@@ -218,8 +222,7 @@ extension ViewController: UITableViewDelegate {
             //detailScreen.url = newsItem.link
             
             let detailScreen = StoryViewController(url: newsItem.link!)
-            detailScreen.articleImage = newsItem.image
-            detailScreen.provider = newsItem.provider
+            detailScreen.newsItem = newsItem
             self.navigationController?.pushViewController(detailScreen, animated: true)
         }
     }

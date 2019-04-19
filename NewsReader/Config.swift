@@ -16,7 +16,8 @@ public class Config {
         Provider.ctv: "providerImageCTV",
         Provider.cbc: "providerImageCBC",
         Provider.guardian: "providerImageGuardian",
-        Provider.bbc: "providerImageBBC"
+        Provider.bbc: "providerImageBBC",
+        Provider.huff: "providerImageHuff"
     ]
     
     public static let newsFeeds = [
@@ -48,8 +49,7 @@ public class Config {
             "Offbeat": "https://rss.cbc.ca/lineup/offbeat.xml",
             "Indigenous": "https://www.cbc.ca/cmlink/rss-cbcaboriginal",
             "Sports": "https://rss.cbc.ca/lineup/sports.xml",
-            "Toronto": "https://rss.cbc.ca/lineup/canada-toronto.xml",
-            "In-depth": "https://rss.cbc.ca/lineup/thenational./Users/victor/Documents/NewsReader/NewsReader.xcodeprojxml"
+            "Toronto": "https://rss.cbc.ca/lineup/canada-toronto.xml"
         ]
         ,
         Provider.guardian: [
@@ -66,15 +66,20 @@ public class Config {
         ]
         ,
         Provider.bbc: [
-            "Top Stories": "http://feeds.bbci.co.uk/news/rss.xml",
-            "World": "http://feeds.bbci.co.uk/news/world/rss.xml",
-            "Business": "http://feeds.bbci.co.uk/news/business/rss.xml",
-            "Politics": "http://feeds.bbci.co.uk/news/politics/rss.xml",
-            "Health": "http://feeds.bbci.co.uk/news/health/rss.xml",
+//            "Top Stories": "http://feeds.bbci.co.uk/news/rss.xml",
+//            "World": "http://feeds.bbci.co.uk/news/world/rss.xml",
+//            "Business": "http://feeds.bbci.co.uk/news/business/rss.xml",
+//            "Politics": "http://feeds.bbci.co.uk/news/politics/rss.xml",
+//            "Health": "http://feeds.bbci.co.uk/news/health/rss.xml",
             "Science": "http://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
-            "Technology": "http://feeds.bbci.co.uk/news/technology/rss.xml",
-            "Arts & Entertainment": "http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"
+//            "Technology": "http://feeds.bbci.co.uk/news/technology/rss.xml",
+//            "Arts & Entertainment": "http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"
         ]
+        ,
+//        Provider.huff: [
+//            "World": "https://www.huffpost.com/section/world-news/feed",
+//            //"Canada": "https://www.huffpost.com/topic/canada/feed"
+//        ]
     ]
     
     public static let topics = [
@@ -94,7 +99,7 @@ public class Config {
         "Offbeat",
         "Indigenous",
         "Toronto",
-        "In-depth"
+        
     ]
     
     public static let classArticleHeadline : [Provider: String] = [

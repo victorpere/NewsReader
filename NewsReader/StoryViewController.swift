@@ -10,6 +10,12 @@ import Foundation
 import SwiftSoup
 
 class StoryViewController: UIViewController {
+    // MARK: - Constants
+    
+    let sidemargin: CGFloat = 5.0
+    
+    // MARK: - Variables
+    
     var scrollView: UIScrollView!
     var contentView: UIView!
     var articleImageView: UIImageView!
@@ -17,13 +23,10 @@ class StoryViewController: UIViewController {
     var url: String!
     var activityIndicator: UIActivityIndicatorView!
     var newsArticle: NewsArticle?
+    var newsItem: NewsItem?
     
     var articleHeadlineLabel: UILabel!
     var articleBodyLabel: UILabel!
-    var articleImage: UIImage!
-    var provider: Provider!
-    
-    let sidemargin: CGFloat = 5.0
     
     // MARK: - Initializers
     
@@ -47,8 +50,8 @@ class StoryViewController: UIViewController {
         
         self.contentView = UIView(frame: self.view.frame)
         
-        self.articleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.articleImage.size.height/self.articleImage.size.width)*self.view.frame.width))
-        self.articleImageView.image = self.articleImage
+        self.articleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.newsItem!.image!.size.height/self.newsItem!.image!.size.width)*self.view.frame.width))
+        self.articleImageView.image = self.newsItem!.image
         self.contentView.addSubview(self.articleImageView)
         
         self.articleHeadlineLabel = UILabel(frame: CGRect(x: self.sidemargin, y: self.articleImageView.frame.origin.y + self.articleImageView.frame.height, width: self.view.frame.width - self.sidemargin, height: 0))
@@ -90,7 +93,7 @@ extension StoryViewController: RequesterDelegate {
         let q1 = DispatchQueue.global(qos: .userInitiated)
         q1.async {
             let stringData = String(data: data, encoding: .utf8)!
-            self.newsArticle = NewsArticle(html: stringData, provider: self.provider)
+            self.newsArticle = NewsArticle(html: stringData, provider: self.newsItem!.provider!)
             DispatchQueue.main.async {
                 self.articleHeadlineLabel.text = self.newsArticle?.headline
                 self.articleBodyLabel.text = self.newsArticle?.body

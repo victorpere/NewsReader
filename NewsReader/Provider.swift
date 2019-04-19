@@ -9,5 +9,5 @@
 import Foundation
 
 public enum Provider: Int {
-    case ctv, cbc, guardian, bbc
+    case ctv, cbc, guardian, bbc, huff
 }
