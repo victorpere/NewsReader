@@ -17,7 +17,8 @@ public class Config {
         Provider.cbc: "providerImageCBC",
         Provider.guardian: "providerImageGuardian",
         Provider.bbc: "providerImageBBC",
-        Provider.huff: "providerImageHuff"
+        Provider.huff: "providerImageHuff",
+        Provider.global: "providerImageGlobal"
     ]
     
     public static let newsFeeds = [
@@ -35,8 +36,7 @@ public class Config {
             "Health": "https://www.ctvnews.ca/rss/ctvnews-ca-health-public-rss-1.822299",
             "Autos": "https://www.ctvnews.ca/rss/autos/ctv-news-autos-1.867636",
             "Toronto": "https://toronto.ctvnews.ca/rss/ctv-news-toronto-1.822319"
-        ]
-        ,
+        ],
         Provider.cbc: [
             "Top Stories": "https://www.cbc.ca/cmlink/rss-topstories",
             "Canada": "https://rss.cbc.ca/lineup/canada.xml",
@@ -50,8 +50,7 @@ public class Config {
             "Indigenous": "https://www.cbc.ca/cmlink/rss-cbcaboriginal",
             "Sports": "https://rss.cbc.ca/lineup/sports.xml",
             "Toronto": "https://rss.cbc.ca/lineup/canada-toronto.xml"
-        ]
-        ,
+        ],
         Provider.guardian: [
             "Top Stories": "https://www.theguardian.com/theguardian/mainsection/topstories/rss",
             "World": "https://www.theguardian.com/world/rss",
@@ -63,8 +62,7 @@ public class Config {
             "Technology": "https://www.theguardian.com/uk/technology/rss",
             "Business": "https://www.theguardian.com/uk/business/rss",
             "Health": "https://www.theguardian.com/lifeandstyle/health-and-wellbeing/rss"
-        ]
-        ,
+        ],
         Provider.bbc: [
 //            "Top Stories": "http://feeds.bbci.co.uk/news/rss.xml",
 //            "World": "http://feeds.bbci.co.uk/news/world/rss.xml",
@@ -74,12 +72,24 @@ public class Config {
             "Science": "http://feeds.bbci.co.uk/news/science_and_environment/rss.xml",
 //            "Technology": "http://feeds.bbci.co.uk/news/technology/rss.xml",
 //            "Arts & Entertainment": "http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml"
-        ]
-        ,
+        ],
 //        Provider.huff: [
 //            "World": "https://www.huffpost.com/section/world-news/feed",
 //            //"Canada": "https://www.huffpost.com/topic/canada/feed"
 //        ]
+        Provider.global: [
+            "Top Stories": "https://globalnews.ca/feed/",
+            "World": "https://globalnews.ca/world/feed/",
+            "Canada": "https://globalnews.ca/canada/feed/",
+            "Politics": "https://globalnews.ca/politics/feed/",
+            "Business": "https://globalnews.ca/money/feed/",
+            "Health": "https://globalnews.ca/health/feed/",
+            "Arts & Entertainment": "https://globalnews.ca/entertainment/feed/",
+            "Technology": "https://globalnews.ca/tech/feed/",
+            "Sports": "https://globalnews.ca/tech/feed/",
+            "Toronto": "https://globalnews.ca/toronto/feed/",
+        ]
+        
     ]
     
     public static let topics = [
@@ -106,13 +116,15 @@ public class Config {
         Provider.ctv: "articleHeadline",
         Provider.cbc: "detailHeadline",
         Provider.guardian: "content__headline",
-        Provider.bbc: "story-body__h1"
+        Provider.bbc: "story-body__h1",
+        Provider.global: "gn-speakable-title",
     ]
     
     public static let classArticleBody : [Provider: String] = [
         Provider.ctv: "articleBody",
         Provider.cbc: "story",
         Provider.guardian: "content__article-body",
-        Provider.bbc: "story-body__inner"
+        Provider.bbc: "story-body__inner",
+        Provider.global: "story-txt",
     ]
 }

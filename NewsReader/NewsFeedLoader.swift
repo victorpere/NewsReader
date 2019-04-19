@@ -67,7 +67,7 @@ extension NewsFeedLoader : XMLParserDelegate {
             // start new item
             self.newsItems.append(NewsItem())
         case "enclosure","media:content","media:thumbnail":
-            if newsItems.count > 0 {
+            if newsItems.count > 0 && newsItems[newsItems.count - 1].imageURL == nil {
                 newsItems[newsItems.count - 1].imageURL = attributeDict["url"]
             }
         default:
@@ -97,9 +97,9 @@ extension NewsFeedLoader : XMLParserDelegate {
                 newsItem.title = self.xmlBuffer
             case "link":
                 newsItem.link  = self.xmlBuffer
-                newsItem.category = newsItem.link!.categoryUrl() != nil ? newsItem.link!.categoryUrl() : "General"
-                if (categories.filter{ $0 == newsItem.category }.count == 0) {
-                    categories.append(newsItem.category!)
+                newsItem.urlCategory = newsItem.link!.categoryUrl() != nil ? newsItem.link!.categoryUrl() : "General"
+                if (categories.filter{ $0 == newsItem.urlCategory }.count == 0) {
+                    categories.append(newsItem.urlCategory!)
                 }
             case "description":
                 newsItem.description = self.xmlBuffer
@@ -130,7 +130,11 @@ extension NewsFeedLoader : XMLParserDelegate {
             case "enclosure":
                 newsItem.imageCaption = self.xmlBuffer
             case "category":
-                newsItem.category = self.xmlBuffer.category()
+                //newsItem.category = self.xmlBuffer.category()
+                let category = self.xmlBuffer.category()
+                if category != nil {
+                    newsItem.categories.append(category!)
+                }
             default:
                 break
             }

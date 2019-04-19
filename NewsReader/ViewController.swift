@@ -147,8 +147,11 @@ extension ViewController: UITableViewDataSource {
             cell!.dateLabel.text = newsItem.formattedPubDateStr
             cell!.providerImage.image = UIImage(named: Config.providerImages[newsItem.provider!]!)
             
-            if newsItem.category != nil {
-                cell!.categoryLabel.text = newsItem.category
+            if newsItem.categories.count > 0 {
+                cell!.categoryLabel.text = newsItem.categories[0]
+                cell!.categoryLabel.isHidden = false
+            } else if newsItem.urlCategory != nil {
+                cell!.categoryLabel.text = newsItem.urlCategory
                 cell!.categoryLabel.isHidden = false
             } else {
                 cell!.categoryLabel.isHidden = true
