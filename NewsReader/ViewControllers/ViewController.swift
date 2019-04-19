@@ -51,6 +51,9 @@ class ViewController: UIViewController {
         
         toolBar.setItems([feedButton, flexibleSpace, filterButton], animated: true)
         self.view.addSubview(toolBar)
+        
+        let refreshButton = UIBarButtonItem(title: "Refresh", style: .plain, target: self, action: #selector(refreshFeed))
+        self.navigationItem.rightBarButtonItem = refreshButton
     }
     
     // MARK: - Private methods
@@ -142,6 +145,7 @@ extension ViewController: UITableViewDataSource {
             let newsItem = self.newsFeed.newsItems[indexPath.row]
             
             cell!.tag = indexPath.row
+            cell!.guid = newsItem.guid
             cell!.titleLabel.text = newsItem.title
             cell!.descriptionLabel.text = newsItem.description
             cell!.dateLabel.text = newsItem.formattedPubDateStr
@@ -178,13 +182,16 @@ extension ViewController: UITableViewDataSource {
                 q2.async {
                     do {
                         let largestImage = newsItem.mediaItems.max { a,b in a.width < b.width }
+                        if largestImage!.media == nil {
+                            let imageData = try Data(contentsOf: URL(string: largestImage!.url!)!)
+                            largestImage?.media = UIImage(data: imageData)
+                        }
                         
-                        let imageData = try Data(contentsOf: URL(string: largestImage!.url!)!)
-                        let image = UIImage(data: imageData)
+                        let image = largestImage?.media as? UIImage
                         if image != nil {
                             newsItem.image = image
                             DispatchQueue.main.async {
-                                if cell!.tag == indexPath.row {
+                                if cell!.tag == indexPath.row && cell!.guid == newsItem.guid {
                                     cell!.newsImageView.image = image
                                     cell!.setNeedsLayout()
                                 }

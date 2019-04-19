@@ -13,4 +13,6 @@ class MediaItem : NSObject {
     var media: NSObject?
     var width: Double = 0
     var height: Double = 0
+    var type: MediaType?
+    var caption: String?
 }

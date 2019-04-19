@@ -16,4 +16,5 @@ class NewsItemCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var providerImage: UIImageView!
+    var guid: String?
 }
