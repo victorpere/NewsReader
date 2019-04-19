@@ -11,6 +11,9 @@ import UIKit
 import SwiftSoup
 
 class NewsFeed : NSObject {
+    
+    // MARK: - Variables
+    
     let userDefaults = UserDefaults.standard
 
     var delegate: NewsFeedDelegate?

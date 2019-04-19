@@ -32,6 +32,23 @@ class NewsFeedLoader : NSObject {
     func feedLoaded() {
         for item in self.newsItems {
             item.provider = self.provider
+            for mediaItem in item.mediaItems {
+                if mediaItem.width == 0 {
+                    let q = DispatchQueue(label: "ImageLoadFromNewsFeedLoader")
+                    q.async {
+                        do {
+                            let imageData = try Data(contentsOf: URL(string: mediaItem.url!)!)
+                            let image = UIImage(data: imageData)
+                            if image != nil {
+                                mediaItem.media = image
+                                mediaItem.width = Double(image?.size.width ?? 0)
+                            }
+                        } catch let error as NSError {
+                            print(error.localizedDescription)
+                        }
+                    }
+                }
+            }
         }
         self.delegate?.feedUpdated(newsItems: self.newsItems)
     }
@@ -60,15 +77,18 @@ extension NewsFeedLoader : XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        xmlBuffer = ""
+        self.xmlBuffer = ""
         
         switch elementName {
         case "item":
             // start new item
             self.newsItems.append(NewsItem())
         case "enclosure","media:content","media:thumbnail":
-            if newsItems.count > 0 && newsItems[newsItems.count - 1].imageURL == nil {
-                newsItems[newsItems.count - 1].imageURL = attributeDict["url"]
+            if self.newsItems.count > 0 {
+                let mediaItem = MediaItem()
+                mediaItem.url = attributeDict["url"]
+                mediaItem.width = Double(attributeDict["width"] ?? "0")!
+                self.newsItems[self.newsItems.count - 1].mediaItems.append(mediaItem)
             }
         default:
             break
@@ -80,15 +100,14 @@ extension NewsFeedLoader : XMLParserDelegate {
     }
     
     func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
-        let stringData = String(data: CDATABlock, encoding: .utf8)
-        self.xmlBuffer = stringData as String!
+        self.xmlBuffer = String(data: CDATABlock, encoding: .utf8)
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         
-        if newsItems.count > 0 {
+        if self.newsItems.count > 0 {
             // parsing news item
-            let newsItem = self.newsItems[newsItems.count - 1]
+            let newsItem = self.newsItems[self.newsItems.count - 1]
             
             switch elementName {
             case "item":
@@ -108,7 +127,9 @@ extension NewsFeedLoader : XMLParserDelegate {
                 guard let imgs = try? document.getElementsByTag("img") else { break }
                 for img in imgs {
                     guard let url = try? img.attr("src") else { break }
-                    newsItem.imageURL = url
+                    let mediaItem = MediaItem()
+                    mediaItem.url = url
+                    newsItem.mediaItems.append(mediaItem)
                 }
                 guard let text = try? document.text() else { break }
                 newsItem.description = text

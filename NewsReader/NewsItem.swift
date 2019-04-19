@@ -20,12 +20,12 @@ class NewsItem {
     var guid: String?
     var pubDateStr: String?
     var modDateStr: String?
-    var imageURL: String?
     var imageCaption: String?
     var image: UIImage?
     var urlCategory: String?
     var provider: Provider?
     var categories = [String]()
+    var mediaItems = [MediaItem]()
     
     var pubDate: Date?
     var formattedPubDateStr: String?

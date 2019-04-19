@@ -172,12 +172,14 @@ extension ViewController: UITableViewDataSource {
 
             if newsItem.image != nil {
                 cell?.newsImageView.image = newsItem.image
-            } else if newsItem.imageURL != nil {
+            } else if newsItem.mediaItems.count > 0 {
                 // asynchronously download the image
                 let q2 = DispatchQueue.global(qos: .userInitiated)
                 q2.async {
                     do {
-                        let imageData = try Data(contentsOf: URL(string: newsItem.imageURL!)!)
+                        let largestImage = newsItem.mediaItems.max { a,b in a.width < b.width }
+                        
+                        let imageData = try Data(contentsOf: URL(string: largestImage!.url!)!)
                         let image = UIImage(data: imageData)
                         if image != nil {
                             newsItem.image = image
