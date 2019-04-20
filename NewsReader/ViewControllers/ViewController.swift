@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         self.refreshFeed()
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.height - self.toolBarHeight, width: self.view.frame.width, height: self.toolBarHeight))
-        let feedButton = UIBarButtonItem(title: "Feed", style: .plain, target: self, action: #selector(selectFeed(_:)))
+        let feedButton = UIBarButtonItem(title: "Topic", style: .plain, target: self, action: #selector(selectFeed(_:)))
         let filterButton = UIBarButtonItem(title: "Category", style: .plain, target: self, action: #selector(filterButtonAction(_:)))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil);
         

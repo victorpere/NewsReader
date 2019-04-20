@@ -62,6 +62,7 @@ class NewsFeed : NSObject {
     // MARK: - Public methods
     
     func refreshNewsFeed() {
+        self.categories.removeAll()
         self.newsItems.removeAll()
         self.urlsLoaded = 0
         for (provider, _) in Config.newsFeeds {
@@ -69,7 +70,7 @@ class NewsFeed : NSObject {
             q.async {
                 let newsFeedLoader = NewsFeedLoader()
                 newsFeedLoader.delegate = self
-                newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.lastFeed])
+                newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.lastFeed], filter: self.filter)
                 
                 /*
                  var xmlParser: XMLParser
@@ -93,10 +94,17 @@ class NewsFeed : NSObject {
 // MARK: - NewsFeedLoaderDelegate
 
 extension NewsFeed : NewsFeedLoaderDelegate {
-    func feedUpdated(newsItems: [NewsItem]) {
+    func feedUpdated(newsItems: [NewsItem], categories: [String]) {
         self.newsItems.append(contentsOf: newsItems)
         self.newsItems.sort { $0.pubDate! > $1.pubDate! }
         self.urlsLoaded += 1
+        
+//        for category in categories {
+//            if !self.categories.contains(category) {
+//                self.categories.append(category)
+//            }
+//        }
+//        self.categories.sort { $0 < $1 }
 
         self.lastUpdate = Date()
         self.delegate?.feedUpdated()

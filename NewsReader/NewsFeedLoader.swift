@@ -15,13 +15,15 @@ class NewsFeedLoader : NSObject {
     var categories = [String]()
     var provider: Provider?
     var xmlBuffer: String!
+    var filter: String?
 
     var delegate: NewsFeedLoaderDelegate?
     
     // MARK: - Public methods
-    func loadFeed(provider: Provider, topic: String) {
+    func loadFeed(provider: Provider, topic: String, filter: String?) {
         if let feedUrl = Config.newsFeeds[provider]![topic] {
             self.provider = provider
+            self.filter = filter
             let requester = Requester()
             requester.delegate = self
             requester.getData(from: feedUrl)
@@ -30,6 +32,7 @@ class NewsFeedLoader : NSObject {
     
     // MARK: - Private methods
     func feedLoaded() {
+        self.newsItems = self.newsItems.filter { self.filter == nil || $0.categories.contains(self.filter!) }
         for item in self.newsItems {
             item.provider = self.provider
             for mediaItem in item.mediaItems {
@@ -50,7 +53,7 @@ class NewsFeedLoader : NSObject {
                 }
             }
         }
-        self.delegate?.feedUpdated(newsItems: self.newsItems)
+        self.delegate?.feedUpdated(newsItems: self.newsItems, categories: self.categories)
     }
 }
 
@@ -117,8 +120,8 @@ extension NewsFeedLoader : XMLParserDelegate {
             case "link":
                 newsItem.link  = self.xmlBuffer
                 newsItem.urlCategory = newsItem.link!.categoryUrl() != nil ? newsItem.link!.categoryUrl() : "General"
-                if (categories.filter{ $0 == newsItem.urlCategory }.count == 0) {
-                    categories.append(newsItem.urlCategory!)
+                if (!self.categories.contains(newsItem.urlCategory!)) {
+                    self.categories.append(newsItem.urlCategory!)
                 }
             case "description":
                 newsItem.description = self.xmlBuffer
@@ -175,5 +178,5 @@ extension NewsFeedLoader : XMLParserDelegate {
 // MARK: - protocol NewsFeedDelegate
 
 protocol NewsFeedLoaderDelegate {
-    func feedUpdated(newsItems: [NewsItem])
+    func feedUpdated(newsItems: [NewsItem], categories: [String])
 }
