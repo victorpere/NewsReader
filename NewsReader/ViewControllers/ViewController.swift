@@ -89,7 +89,7 @@ class ViewController: UIViewController {
         // check for internet connectivity
         if !(self.reachability?.isReachable)! {
             self.tableView.refreshControl!.endRefreshing()
-            let alert = UIAlertController(title: "No iternet connection available", message: "Cannot refresh feed", preferredStyle: .alert)
+            let alert = UIAlertController(title: "No iternet connection available", message: "Cannot refresh", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(okAction)
             self.present(alert, animated: true, completion: nil)
@@ -102,14 +102,21 @@ class ViewController: UIViewController {
     }
     
     @objc private func selectFeed(_ sender: UIBarButtonItem) {
-        let feedAlert = UIAlertController(title: "Select feed:", message: nil, preferredStyle: .actionSheet)
+        let feedAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         for (i, feed) in Config.topics.enumerated() {
-            let feedAction = UIAlertAction(title: feed, style: .default, handler: { (alert) -> Void in
-                self.newsFeed.lastFeed = i
-                self.newsFeed.filter = nil
-                self.tableView.setContentOffset(CGPoint(x: 0, y: 0 - UIApplication.shared.statusBarFrame.size.height - (self.navigationController?.navigationBar.frame.size.height)!), animated: false)
-                self.refreshFeed()
+            var feedTitle = feed
+            if self.newsFeed.settings.lastFeed == i {
+                feedTitle.insert(" ", at: feedTitle.startIndex)
+                feedTitle.insert("✓", at: feedTitle.startIndex)
+            }
+            let feedAction = UIAlertAction(title: feedTitle, style: .default, handler: { (alert) -> Void in
+                if self.newsFeed.settings.lastFeed != i {
+                    self.newsFeed.settings.lastFeed = i
+                    self.newsFeed.filter = nil
+                    self.tableView.setContentOffset(CGPoint(x: 0, y: 0 - UIApplication.shared.statusBarFrame.size.height - (self.navigationController?.navigationBar.frame.size.height)!), animated: false)
+                    self.refreshFeed()
+                }
             } )
             feedAlert.addAction(feedAction)
         }
@@ -276,8 +283,6 @@ extension ViewController: NewsFeedDelegate {
 
 extension ViewController: SettingsViewControllerDelegate {
     func settingsUpdated() {
-        DispatchQueue.main.async {
-            self.refreshFeed()
-        }
+        self.refreshFeed()
     }
 }

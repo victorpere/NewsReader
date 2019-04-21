@@ -14,6 +14,7 @@
 		577255C3226A512500C5E8AC /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577255C2226A512500C5E8AC /* MediaItem.swift */; };
 		577255C5226A51BF00C5E8AC /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577255C4226A51BF00C5E8AC /* MediaType.swift */; };
 		577255C9226AAB5800C5E8AC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577255C8226AAB5800C5E8AC /* SettingsViewController.swift */; };
+		577255CB226D14FF00C5E8AC /* FeedSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577255CA226D14FF00C5E8AC /* FeedSetting.swift */; };
 		57897FFC1E8593C100B1D4A6 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57897FFB1E8593C100B1D4A6 /* Config.swift */; };
 		578B1C931E81EF65008B8381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1C921E81EF65008B8381 /* AppDelegate.swift */; };
 		578B1C951E81EF65008B8381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1C941E81EF65008B8381 /* ViewController.swift */; };
@@ -59,6 +60,7 @@
 		577255C2226A512500C5E8AC /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
 		577255C4226A51BF00C5E8AC /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
 		577255C8226AAB5800C5E8AC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		577255CA226D14FF00C5E8AC /* FeedSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSetting.swift; sourceTree = "<group>"; };
 		57897FFB1E8593C100B1D4A6 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		578B1C8F1E81EF65008B8381 /* NewsReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		578B1C921E81EF65008B8381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				578B1C921E81EF65008B8381 /* AppDelegate.swift */,
 				57897FFB1E8593C100B1D4A6 /* Config.swift */,
 				571441C2226808A7006C8A7E /* Settings.swift */,
+				577255CA226D14FF00C5E8AC /* FeedSetting.swift */,
 				578B1CB91E820180008B8381 /* NewsFeed.swift */,
 				579C67EE2264033C00DC46E6 /* NewsFeedLoader.swift */,
 				578B1CB71E81FF96008B8381 /* NewsItem.swift */,
@@ -422,6 +425,7 @@
 				578B1CBA1E820180008B8381 /* NewsFeed.swift in Sources */,
 				579C67EF2264033C00DC46E6 /* NewsFeedLoader.swift in Sources */,
 				578B1CB81E81FF96008B8381 /* NewsItem.swift in Sources */,
+				577255CB226D14FF00C5E8AC /* FeedSetting.swift in Sources */,
 				57897FFC1E8593C100B1D4A6 /* Config.swift in Sources */,
 				578B1C951E81EF65008B8381 /* ViewController.swift in Sources */,
 				571441C3226808A7006C8A7E /* Settings.swift in Sources */,

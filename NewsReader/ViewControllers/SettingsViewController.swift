@@ -16,6 +16,7 @@ class SettingsViewController: UIViewController {
     
     var tableView: UITableView!
     var delegate: SettingsViewControllerDelegate!
+    var settingsChanged = false
     
     // MARK: - View methods
     
@@ -26,7 +27,7 @@ class SettingsViewController: UIViewController {
         self.title = "Settings"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonAction(_:)))
         
-        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), style: UITableViewStyle.grouped)
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.view.addSubview(self.tableView)
@@ -35,7 +36,9 @@ class SettingsViewController: UIViewController {
     // MARK: - Button actions
     
     @objc private func doneButtonAction(_ sender: UIBarButtonItem) {
-        self.delegate.settingsUpdated()
+        if (self.settingsChanged) {
+            self.delegate.settingsUpdated()
+        }
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -44,15 +47,26 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Provider.allCases.count
+        switch section {
+        case 0:
+            return Provider.allCases.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
-        let provider = Provider.allCasesSortedByName()[indexPath.row]
-        cell.imageView?.image = UIImage(named: Config.providerImages[provider]!)
-        cell.textLabel?.text = provider.name()
-        cell.detailTextLabel?.text = self.settings.ProviderSetting(provider) ? "On" : "Off"
+        switch indexPath.section {
+        case 0:
+            let provider = Provider.allCasesSortedByName()[indexPath.row]
+            cell.imageView?.image = UIImage(named: Config.providerImages[provider]!)
+            cell.textLabel?.text = provider.name()
+            cell.detailTextLabel?.text = self.settings.providerSetting(provider) ? "On" : "Off"
+            cell.accessoryType = .disclosureIndicator
+        default:
+            break
+        }
         return cell
     }
 }
@@ -61,10 +75,16 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView.deselectRow(at: indexPath, animated: true)
-        let provider = Provider.allCasesSortedByName()[indexPath.row]
-        self.settings.ProviderSetting(provider, !self.settings.ProviderSetting(provider))
-        self.tableView.reloadData()
+        switch indexPath.section {
+        case 0:
+            self.tableView.deselectRow(at: indexPath, animated: true)
+            let provider = Provider.allCasesSortedByName()[indexPath.row]
+            self.settings.providerSetting(provider, !self.settings.providerSetting(provider))
+            self.settingsChanged = true
+            self.tableView.reloadData()
+        default:
+            break
+        }
     }
 }
 

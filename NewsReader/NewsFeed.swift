@@ -41,22 +41,22 @@ class NewsFeed : NSObject {
         }
     }
     
-    var lastFeed: Int {
-        get {
-            if let lastFeed = self.userDefaults.value(forKey: "LastFeed") as? Int {
-                return lastFeed
-            }
-            return 0
-        }
-        set(value) {
-            self.userDefaults.setValue(value, forKey: "LastFeed")
-            self.userDefaults.synchronize()
-        }
-    }
+//    var lastFeed: Int {
+//        get {
+//            if let lastFeed = self.userDefaults.value(forKey: "LastFeed") as? Int {
+//                return lastFeed
+//            }
+//            return 0
+//        }
+//        set(value) {
+//            self.userDefaults.setValue(value, forKey: "LastFeed")
+//            self.userDefaults.synchronize()
+//        }
+//    }
     
     var title: String? {
         get {
-            return Config.topics[self.lastFeed]
+            return Config.topics[self.settings.lastFeed]
         }
     }
     
@@ -67,12 +67,12 @@ class NewsFeed : NSObject {
         self.newsItems.removeAll()
         self.urlsLoaded = 0
         for (provider, _) in Config.newsFeeds {
-            if self.settings.ProviderSetting(provider) {
+            if self.settings.providerSetting(provider) {
                 let q = DispatchQueue(label: "getNewsFeedQueue")
                 q.async {
                     let newsFeedLoader = NewsFeedLoader()
                     newsFeedLoader.delegate = self
-                    newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.lastFeed], filter: self.filter)
+                    newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.settings.lastFeed], filter: self.filter)
                     
                     /*
                      var xmlParser: XMLParser
