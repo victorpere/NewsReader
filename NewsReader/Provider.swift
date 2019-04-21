@@ -8,6 +8,29 @@
 
 import Foundation
 
-public enum Provider: Int {
+public enum Provider: Int, CaseIterable {
     case ctv, cbc, guardian, bbc, huff, global
+    
+    func name() -> String {
+        switch self {
+        case .ctv:
+            return "CTV"
+        case .cbc:
+            return "CBC"
+        case .guardian:
+            return "The Guardian"
+        case .bbc:
+            return "BBC"
+        case .huff:
+            return "Huffington Post"
+        case.global:
+            return "Global"
+        default:
+            return "Other"
+        }
+    }
+    
+    static func allCasesSortedByName() -> [Provider] {
+        return Provider.allCases.sorted { $0.name() < $1.name() }
+    }
 }

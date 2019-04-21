@@ -15,6 +15,7 @@ class NewsFeed : NSObject {
     // MARK: - Variables
     
     let userDefaults = UserDefaults.standard
+    let settings = Settings()
 
     var delegate: NewsFeedDelegate?
     var filter: String?
@@ -66,24 +67,26 @@ class NewsFeed : NSObject {
         self.newsItems.removeAll()
         self.urlsLoaded = 0
         for (provider, _) in Config.newsFeeds {
-            let q = DispatchQueue(label: "getNewsFeedQueue")
-            q.async {
-                let newsFeedLoader = NewsFeedLoader()
-                newsFeedLoader.delegate = self
-                newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.lastFeed], filter: self.filter)
-                
-                /*
-                 var xmlParser: XMLParser
-                 
-                 let path = Bundle.main.path(forResource: "ctvnews", ofType: "xml")
-                 if path != nil {
-                 xmlParser = XMLParser(contentsOf: URL(fileURLWithPath: path!))!
-                 xmlParser.delegate = self
-                 xmlParser.parse()
-                 } else {
-                 print("Failed to find MyFile.xml")
-                 }
-                 */
+            if self.settings.ProviderSetting(provider) {
+                let q = DispatchQueue(label: "getNewsFeedQueue")
+                q.async {
+                    let newsFeedLoader = NewsFeedLoader()
+                    newsFeedLoader.delegate = self
+                    newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.lastFeed], filter: self.filter)
+                    
+                    /*
+                     var xmlParser: XMLParser
+                     
+                     let path = Bundle.main.path(forResource: "ctvnews", ofType: "xml")
+                     if path != nil {
+                     xmlParser = XMLParser(contentsOf: URL(fileURLWithPath: path!))!
+                     xmlParser.delegate = self
+                     xmlParser.parse()
+                     } else {
+                     print("Failed to find MyFile.xml")
+                     }
+                     */
+                }
             }
         }
     }

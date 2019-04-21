@@ -13,6 +13,7 @@
 		5760DEF422374E15005A28FD /* Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760DEF322374E15005A28FD /* Provider.swift */; };
 		577255C3226A512500C5E8AC /* MediaItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577255C2226A512500C5E8AC /* MediaItem.swift */; };
 		577255C5226A51BF00C5E8AC /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577255C4226A51BF00C5E8AC /* MediaType.swift */; };
+		577255C9226AAB5800C5E8AC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577255C8226AAB5800C5E8AC /* SettingsViewController.swift */; };
 		57897FFC1E8593C100B1D4A6 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57897FFB1E8593C100B1D4A6 /* Config.swift */; };
 		578B1C931E81EF65008B8381 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1C921E81EF65008B8381 /* AppDelegate.swift */; };
 		578B1C951E81EF65008B8381 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578B1C941E81EF65008B8381 /* ViewController.swift */; };
@@ -57,6 +58,7 @@
 		5760DEF322374E15005A28FD /* Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Provider.swift; sourceTree = "<group>"; };
 		577255C2226A512500C5E8AC /* MediaItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItem.swift; sourceTree = "<group>"; };
 		577255C4226A51BF00C5E8AC /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		577255C8226AAB5800C5E8AC /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		57897FFB1E8593C100B1D4A6 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		578B1C8F1E81EF65008B8381 /* NewsReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		578B1C921E81EF65008B8381 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				578B1C941E81EF65008B8381 /* ViewController.swift */,
 				57B5C6D82235E265004EAF92 /* StoryViewController.swift */,
 				578B1CC31E82EF42008B8381 /* WebViewController.swift */,
+				577255C8226AAB5800C5E8AC /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -414,6 +417,7 @@
 				57B5C6D92235E265004EAF92 /* StoryViewController.swift in Sources */,
 				578B1CBF1E8236F6008B8381 /* Reachability.swift in Sources */,
 				578B1CC41E82EF42008B8381 /* WebViewController.swift in Sources */,
+				577255C9226AAB5800C5E8AC /* SettingsViewController.swift in Sources */,
 				579C86861E842561001D7534 /* String.swift in Sources */,
 				578B1CBA1E820180008B8381 /* NewsFeed.swift in Sources */,
 				579C67EF2264033C00DC46E6 /* NewsFeedLoader.swift in Sources */,

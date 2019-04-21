@@ -47,16 +47,17 @@ class ViewController: UIViewController {
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.height - self.toolBarHeight, width: self.view.frame.width, height: self.toolBarHeight))
         let feedButton = UIBarButtonItem(title: "Topic", style: .plain, target: self, action: #selector(selectFeed(_:)))
         let filterButton = UIBarButtonItem(title: "Category", style: .plain, target: self, action: #selector(filterButtonAction(_:)))
+        let settingsButton = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(settingsButtonAction(_:)))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil);
         
-        toolBar.setItems([feedButton, flexibleSpace, filterButton], animated: true)
+        toolBar.setItems([feedButton, flexibleSpace, settingsButton], animated: true)
         self.view.addSubview(toolBar)
         
         let refreshButton = UIBarButtonItem(title: "Refresh", style: .plain, target: self, action: #selector(refreshFeed))
         self.navigationItem.rightBarButtonItem = refreshButton
     }
     
-    // MARK: - Private methods
+    // MARK: - Button actions
 
     @objc private func filterButtonAction(_ sender: UIBarButtonItem) {
         let filterAlert = UIAlertController(title: "Select category:", message: nil, preferredStyle: .actionSheet)
@@ -84,7 +85,7 @@ class ViewController: UIViewController {
         self.present(filterAlert, animated: true, completion: nil)
     }
     
-    @objc private func refreshFeed() {
+    @objc fileprivate func refreshFeed() {
         // check for internet connectivity
         if !(self.reachability?.isReachable)! {
             self.tableView.refreshControl!.endRefreshing()
@@ -120,6 +121,21 @@ class ViewController: UIViewController {
         alertController?.barButtonItem = sender
         
         self.present(feedAlert, animated: true, completion: nil)
+    }
+    
+    @objc private func settingsButtonAction(_ sender: UIBarButtonItem) {
+        let settingsViewController = SettingsViewController(nibName: nil, bundle: nil)
+        settingsViewController.delegate = self
+        let navSettingsViewController = UINavigationController(rootViewController: settingsViewController)
+        navSettingsViewController.modalPresentationStyle = .popover
+        //settingsViewController.delegate = self
+        
+        let presentationController = navSettingsViewController.popoverPresentationController
+        presentationController?.permittedArrowDirections = .down
+        //presentationController?.sourceView = sender.button
+        //presentationController?.sourceRect = sender.bounds
+        
+        self.present(navSettingsViewController, animated: true, completion: nil)
     }
 }
 
@@ -252,6 +268,16 @@ extension ViewController: NewsFeedDelegate {
             self.title = self.newsFeed.title
             self.tableView.reloadData()
             self.tableView.contentSize = CGSize(width: self.tableView.frame.width, height: self.tableView.contentSize.height + self.toolBarHeight)
+        }
+    }
+}
+
+// MARK: - SettingsViewControllerDelegate
+
+extension ViewController: SettingsViewControllerDelegate {
+    func settingsUpdated() {
+        DispatchQueue.main.async {
+            self.refreshFeed()
         }
     }
 }
