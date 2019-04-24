@@ -222,8 +222,11 @@ extension ViewController: UITableViewDataSource {
                         }
                     } catch let error as NSError {
                         print("error loading image data: \(error)")
+                        cell?.newsImageView.image = nil
                     }
                 }
+            } else {
+                cell?.newsImageView.image = nil
             }
         }
         return cell!

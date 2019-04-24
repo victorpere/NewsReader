@@ -16,6 +16,7 @@ class NewsFeedLoader : NSObject {
     var provider: Provider?
     var xmlBuffer: String!
     var filter: String?
+    var loadImages = false
 
     var delegate: NewsFeedLoaderDelegate?
     
@@ -87,7 +88,7 @@ extension NewsFeedLoader : XMLParserDelegate {
             // start new item
             self.newsItems.append(NewsItem())
         case "enclosure","media:content","media:thumbnail":
-            if self.newsItems.count > 0 {
+            if loadImages && self.newsItems.count > 0 {
                 let mediaItem = MediaItem()
                 mediaItem.url = attributeDict["url"]
                 mediaItem.width = Double(attributeDict["width"] ?? "0")!

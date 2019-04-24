@@ -10,6 +10,11 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    // MARK: - Constants
+    
+    let switchImageTag = 0
+    let switchImageSetting = "SettingImage"
+    
     // MARK: - Variables
     
     let settings = Settings()
@@ -41,15 +46,42 @@ class SettingsViewController: UIViewController {
         }
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc fileprivate func switchChanged(_ theswitch: UISwitch) {
+        switch theswitch.tag {
+        case self.switchImageTag:
+            self.settings.setting(for: self.switchImageSetting, to: theswitch.isOn)
+        default:
+            break
+        }
+        self.settingsChanged = true
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension SettingsViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Sources"
+        case 1:
+            return ""
+        default:
+            return ""
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return Provider.allCases.count
+        case 1:
+            return 1
         default:
             return 0
         }
@@ -64,6 +96,14 @@ extension SettingsViewController: UITableViewDataSource {
             cell.textLabel?.text = provider.name()
             cell.detailTextLabel?.text = self.settings.providerSetting(provider) ? "On" : "Off"
             cell.accessoryType = .disclosureIndicator
+        case 1:
+            cell.textLabel?.text = "Download images"
+            cell.selectionStyle = .none
+            let switchImage = UISwitch()
+            switchImage.isOn = self.settings.setting(for: self.switchImageSetting)
+            switchImage.tag = self.switchImageTag
+            switchImage.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
+            cell.accessoryView = switchImage
         default:
             break
         }

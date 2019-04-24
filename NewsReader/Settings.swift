@@ -35,4 +35,16 @@ public class Settings {
         self.userDefaults.setValue(setting, forKey: provider.name())
         self.userDefaults.synchronize()
     }
+    
+    func setting(for settingName: String) -> Bool {
+        if let setting = self.userDefaults.value(forKey: settingName) as? Bool {
+            return setting
+        }
+        return true
+    }
+    
+    func setting(for settingName: String, to settingValue: Bool) {
+        self.userDefaults.setValue(settingValue, forKey: settingName)
+        self.userDefaults.synchronize()
+    }
 }

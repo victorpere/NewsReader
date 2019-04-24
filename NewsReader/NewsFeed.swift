@@ -66,11 +66,13 @@ class NewsFeed : NSObject {
         self.categories.removeAll()
         self.newsItems.removeAll()
         self.urlsLoaded = 0
+        self.delegate?.feedUpdated()
         for (provider, _) in Config.newsFeeds {
             if self.settings.providerSetting(provider) {
                 let q = DispatchQueue(label: "getNewsFeedQueue")
                 q.async {
                     let newsFeedLoader = NewsFeedLoader()
+                    newsFeedLoader.loadImages = self.settings.setting(for: "SettingImage")
                     newsFeedLoader.delegate = self
                     newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.settings.lastFeed], filter: self.filter)
                     

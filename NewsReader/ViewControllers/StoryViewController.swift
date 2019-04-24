@@ -53,8 +53,11 @@ class StoryViewController: UIViewController {
         if self.newsItem!.image != nil {
             self.articleImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: (self.newsItem!.image!.size.height/self.newsItem!.image!.size.width)*self.view.frame.width))
             self.articleImageView.image = self.newsItem!.image
-            self.contentView.addSubview(self.articleImageView)
+        } else {
+            self.articleImageView = UIImageView()
         }
+        
+        self.contentView.addSubview(self.articleImageView)
         
         self.articleHeadlineLabel = UILabel(frame: CGRect(x: self.sidemargin, y: self.articleImageView.frame.origin.y + self.articleImageView.frame.height, width: self.view.frame.width - self.sidemargin, height: 0))
         self.articleHeadlineLabel.backgroundColor = .white
