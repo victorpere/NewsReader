@@ -9,42 +9,43 @@
 import Foundation
 
 public class Settings {
-    let userDefaults = UserDefaults.standard
+    static let userDefaults = UserDefaults.standard
+    static let mediaCache = NSCache<AnyObject,AnyObject>()
     
-    var lastFeed: Int {
+    static var lastFeed: Int {
         get {
-            if let lastFeed = self.userDefaults.value(forKey: "LastFeed") as? Int {
+            if let lastFeed = Settings.userDefaults.value(forKey: "LastFeed") as? Int {
                 return lastFeed
             }
             return 0
         }
         set(value) {
-            self.userDefaults.setValue(value, forKey: "LastFeed")
-            self.userDefaults.synchronize()
+            Settings.userDefaults.setValue(value, forKey: "LastFeed")
+            Settings.userDefaults.synchronize()
         }
     }
     
-    func providerSetting(_ provider: Provider) -> Bool {
-        if let setting = self.userDefaults.value(forKey: String(provider.name())) as? Bool {
+    public static func providerSetting(_ provider: Provider) -> Bool {
+        if let setting = Settings.userDefaults.value(forKey: String(provider.name())) as? Bool {
             return setting
         }
         return true
     }
     
-    func providerSetting(_ provider: Provider, _ setting: Bool) {
-        self.userDefaults.setValue(setting, forKey: provider.name())
-        self.userDefaults.synchronize()
+    public static func providerSetting(_ provider: Provider, _ setting: Bool) {
+        Settings.userDefaults.setValue(setting, forKey: provider.name())
+        Settings.userDefaults.synchronize()
     }
     
-    func setting(for settingName: String) -> Bool {
-        if let setting = self.userDefaults.value(forKey: settingName) as? Bool {
+    public static func setting(for settingName: String) -> Bool {
+        if let setting = Settings.userDefaults.value(forKey: settingName) as? Bool {
             return setting
         }
         return true
     }
     
-    func setting(for settingName: String, to settingValue: Bool) {
-        self.userDefaults.setValue(settingValue, forKey: settingName)
-        self.userDefaults.synchronize()
+    public static func setting(for settingName: String, to settingValue: Bool) {
+        Settings.userDefaults.setValue(settingValue, forKey: settingName)
+        Settings.userDefaults.synchronize()
     }
 }

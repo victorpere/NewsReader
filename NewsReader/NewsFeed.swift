@@ -15,7 +15,6 @@ class NewsFeed : NSObject {
     // MARK: - Variables
     
     let userDefaults = UserDefaults.standard
-    let settings = Settings()
 
     var delegate: NewsFeedDelegate?
     var filter: String?
@@ -56,7 +55,7 @@ class NewsFeed : NSObject {
     
     var title: String? {
         get {
-            return Config.topics[self.settings.lastFeed]
+            return Config.topics[Settings.lastFeed]
         }
     }
     
@@ -68,13 +67,12 @@ class NewsFeed : NSObject {
         self.urlsLoaded = 0
         self.delegate?.feedUpdated()
         for (provider, _) in Config.newsFeeds {
-            if self.settings.providerSetting(provider) {
+            if Settings.providerSetting(provider) {
                 let q = DispatchQueue(label: "getNewsFeedQueue")
                 q.async {
                     let newsFeedLoader = NewsFeedLoader()
-                    newsFeedLoader.loadImages = self.settings.setting(for: "SettingImage")
                     newsFeedLoader.delegate = self
-                    newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[self.settings.lastFeed], filter: self.filter)
+                    newsFeedLoader.loadFeed(provider: provider, topic: Config.topics[Settings.lastFeed], filter: self.filter)
                     
                     /*
                      var xmlParser: XMLParser

@@ -17,8 +17,6 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Variables
     
-    let settings = Settings()
-    
     var tableView: UITableView!
     var delegate: SettingsViewControllerDelegate!
     var settingsChanged = false
@@ -50,7 +48,7 @@ class SettingsViewController: UIViewController {
     @objc fileprivate func switchChanged(_ theswitch: UISwitch) {
         switch theswitch.tag {
         case self.switchImageTag:
-            self.settings.setting(for: self.switchImageSetting, to: theswitch.isOn)
+            Settings.setting(for: self.switchImageSetting, to: theswitch.isOn)
         default:
             break
         }
@@ -94,13 +92,13 @@ extension SettingsViewController: UITableViewDataSource {
             let provider = Provider.allCasesSortedByName()[indexPath.row]
             cell.imageView?.image = UIImage(named: Config.providerImages[provider]!)
             cell.textLabel?.text = provider.name()
-            cell.detailTextLabel?.text = self.settings.providerSetting(provider) ? "On" : "Off"
+            cell.detailTextLabel?.text = Settings.providerSetting(provider) ? "On" : "Off"
             cell.accessoryType = .disclosureIndicator
         case 1:
             cell.textLabel?.text = "Download images"
             cell.selectionStyle = .none
             let switchImage = UISwitch()
-            switchImage.isOn = self.settings.setting(for: self.switchImageSetting)
+            switchImage.isOn = Settings.setting(for: self.switchImageSetting)
             switchImage.tag = self.switchImageTag
             switchImage.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
             cell.accessoryView = switchImage
@@ -119,7 +117,7 @@ extension SettingsViewController: UITableViewDelegate {
         case 0:
             self.tableView.deselectRow(at: indexPath, animated: true)
             let provider = Provider.allCasesSortedByName()[indexPath.row]
-            self.settings.providerSetting(provider, !self.settings.providerSetting(provider))
+            Settings.providerSetting(provider, !Settings.providerSetting(provider))
             self.settingsChanged = true
             self.tableView.reloadData()
         default:

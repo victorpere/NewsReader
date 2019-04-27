@@ -106,13 +106,13 @@ class ViewController: UIViewController {
         
         for (i, feed) in Config.topics.enumerated() {
             var feedTitle = feed
-            if self.newsFeed.settings.lastFeed == i {
+            if Settings.lastFeed == i {
                 feedTitle.insert(" ", at: feedTitle.startIndex)
                 feedTitle.insert("✓", at: feedTitle.startIndex)
             }
             let feedAction = UIAlertAction(title: feedTitle, style: .default, handler: { (alert) -> Void in
-                if self.newsFeed.settings.lastFeed != i {
-                    self.newsFeed.settings.lastFeed = i
+                if Settings.lastFeed != i {
+                    Settings.lastFeed = i
                     self.newsFeed.filter = nil
                     self.tableView.setContentOffset(CGPoint(x: 0, y: 0 - UIApplication.shared.statusBarFrame.size.height - (self.navigationController?.navigationBar.frame.size.height)!), animated: false)
                     self.refreshFeed()
@@ -203,26 +203,22 @@ extension ViewController: UITableViewDataSource {
                 // asynchronously download the image
                 let q2 = DispatchQueue.global(qos: .userInitiated)
                 q2.async {
-                    do {
-                        let largestImage = newsItem.mediaItems.max { a,b in a.width < b.width }
-                        if largestImage!.media == nil {
-                            let imageData = try Data(contentsOf: URL(string: largestImage!.url!)!)
-                            largestImage?.media = UIImage(data: imageData)
-                        }
-                        
-                        let image = largestImage?.media as? UIImage
-                        if image != nil {
-                            newsItem.image = image
-                            DispatchQueue.main.async {
-                                if cell!.tag == indexPath.row && cell!.guid == newsItem.guid {
-                                    cell!.newsImageView.image = image
-                                    cell!.setNeedsLayout()
-                                }
+                    let largestImage = newsItem.mediaItems.max { a,b in a.width < b.width }
+                    largestImage?.loadMedia()
+                    
+                    let image = largestImage?.media as? UIImage
+                    if image != nil {
+                        newsItem.image = image
+                        DispatchQueue.main.async {
+                            if cell!.tag == indexPath.row && cell!.guid == newsItem.guid {
+                                cell!.newsImageView.image = image
+                                cell!.setNeedsLayout()
                             }
                         }
-                    } catch let error as NSError {
-                        print("error loading image data: \(error)")
-                        cell?.newsImageView.image = nil
+                    } else {
+                        DispatchQueue.main.async {
+                            cell?.newsImageView.image = nil
+                        }                        
                     }
                 }
             } else {

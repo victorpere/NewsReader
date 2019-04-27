@@ -16,7 +16,6 @@ class NewsFeedLoader : NSObject {
     var provider: Provider?
     var xmlBuffer: String!
     var filter: String?
-    var loadImages = false
 
     var delegate: NewsFeedLoaderDelegate?
     
@@ -40,16 +39,7 @@ class NewsFeedLoader : NSObject {
                 if mediaItem.width == 0 {
                     let q = DispatchQueue(label: "ImageLoadFromNewsFeedLoader")
                     q.async {
-                        do {
-                            let imageData = try Data(contentsOf: URL(string: mediaItem.url!)!)
-                            let image = UIImage(data: imageData)
-                            if image != nil {
-                                mediaItem.media = image
-                                mediaItem.width = Double(image?.size.width ?? 0)
-                            }
-                        } catch let error as NSError {
-                            print(error.localizedDescription)
-                        }
+                        mediaItem.loadMedia()
                     }
                 }
             }
@@ -88,7 +78,7 @@ extension NewsFeedLoader : XMLParserDelegate {
             // start new item
             self.newsItems.append(NewsItem())
         case "enclosure","media:content","media:thumbnail":
-            if loadImages && self.newsItems.count > 0 {
+            if self.newsItems.count > 0 {
                 let mediaItem = MediaItem()
                 mediaItem.url = attributeDict["url"]
                 mediaItem.width = Double(attributeDict["width"] ?? "0")!
