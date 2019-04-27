@@ -10,7 +10,7 @@ import Foundation
 
 public class Settings {
     static let userDefaults = UserDefaults.standard
-    static let mediaCache = NSCache<AnyObject,AnyObject>()
+    static let mediaCache = NSCache<AnyObject,AnyObject>() // todo: user CoreData for caching
     
     static var lastFeed: Int {
         get {

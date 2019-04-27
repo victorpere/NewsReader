@@ -35,14 +35,14 @@ class NewsItem {
             if self.guid == nil {
                 return false
             }
-            if let visited = self.userDefaults.value(forKey: self.guid!) as? Bool {
+            if let visited = self.userDefaults.value(forKey: "visited" + self.guid!) as? Bool {
                 return visited
             }
             return false
         }
         set(value) {
             if value && self.guid != nil {
-                self.userDefaults.setValue(value, forKey: self.guid!)
+                self.userDefaults.setValue(value, forKey: "visited" + self.guid!)
                 self.userDefaults.synchronize()
             }
         }

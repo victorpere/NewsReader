@@ -60,7 +60,7 @@ class SettingsViewController: UIViewController {
 
 extension SettingsViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -69,6 +69,8 @@ extension SettingsViewController: UITableViewDataSource {
             return "Sources"
         case 1:
             return ""
+        case 2:
+            return "Cache"
         default:
             return ""
         }
@@ -79,6 +81,8 @@ extension SettingsViewController: UITableViewDataSource {
         case 0:
             return Provider.allCases.count
         case 1:
+            return 1
+        case 2:
             return 1
         default:
             return 0
@@ -102,6 +106,17 @@ extension SettingsViewController: UITableViewDataSource {
             switchImage.tag = self.switchImageTag
             switchImage.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
             cell.accessoryView = switchImage
+        case 2:
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Clear image cache"
+                cell.textLabel?.textColor = .blue
+            case 1:
+                cell.textLabel?.text = "Clear read list"
+                cell.textLabel?.textColor = .blue
+            default:
+                break
+            }
         default:
             break
         }
@@ -120,6 +135,20 @@ extension SettingsViewController: UITableViewDelegate {
             Settings.providerSetting(provider, !Settings.providerSetting(provider))
             self.settingsChanged = true
             self.tableView.reloadData()
+        case 1:
+            break
+        case 2:
+            switch indexPath.row {
+            case 0:
+                self.tableView.deselectRow(at: indexPath, animated: true)
+                Settings.mediaCache.removeAllObjects()
+                self.settingsChanged = true
+            case 1:
+                self.tableView.deselectRow(at: indexPath, animated: true)
+                
+            default:
+                break
+            }
         default:
             break
         }
