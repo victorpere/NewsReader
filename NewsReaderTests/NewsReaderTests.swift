@@ -33,4 +33,46 @@ class NewsReaderTests: XCTestCase {
         }
     }
     
+    func testCache() {
+        let cache = Cache.init(completionClosure: {})
+        
+        //cache.deleteAll(entity: "CacheMediaItem")
+        
+        let url = "https://imgproc.airliners.net/photos/airliners/9/8/1/5515189-v42203641774-6.jpg"
+        do {
+            let mediaData = try Data(contentsOf: URL(string: url)!)
+            
+            XCTAssertNoThrow(cache.save(entity: "CacheMediaItem", keyName: "url", keyValue: url, values: ["media": mediaData]))
+            
+            let fetched = cache.fetch(entity: "CacheMediaItem", keyName: "url", keyValue: url)
+            //XCTAssertNotNil(fetched)
+            
+            if (fetched != nil) {
+                let cachedMediaItem = fetched as! CacheMediaItem
+                XCTAssertNotNil(cachedMediaItem.media)
+                
+                print(cachedMediaItem.url ?? "url is nil")
+            }
+        } catch {
+            
+        }
+    }
+    
+//    func testMedia() {
+//        let cache = Cache.init(completionClosure: {})
+//        cache.deleteAll(entity: "CacheMediaItem")
+//        
+//        let url = "https://imgproc.airliners.net/photos/airliners/9/8/1/5515189-v42203641774-6.jpg"
+//        
+//        let mediaItem = MediaItem()
+//        mediaItem.url = url
+//        mediaItem.loadMedia()
+//        
+//        let mediaItem2 = MediaItem()
+//        mediaItem2.url = url
+//        mediaItem2.loadMedia()
+//        
+//        let fetched = cache.fetch(entity: "CacheMediaItem", keyName: "url", keyValue: url)
+//        XCTAssertNotNil(fetched)
+//    }
 }

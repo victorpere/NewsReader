@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class MediaItem {
+    
+    // MARK: - Variables
+    
     var url: String?
     var media: AnyObject?
     var width: Double = 0
@@ -17,25 +20,40 @@ class MediaItem {
     var type: MediaType?
     var caption: String?
     
+    var cache = Cache.init(completionClosure: {})
+    
+    // MARK: - Public methods
+    
     func loadMedia() {
         if self.media == nil {
-            if let mediaFromCache = Settings.mediaCache.object(forKey: self.url as AnyObject) {
-                self.media = mediaFromCache
-            } else if Settings.setting(for: "SettingImage") {
+            if let cachedMediaItem = cache.fetch(entity: "CacheMediaItem", keyName: "url", keyValue: self.url!) as! CacheMediaItem? {
+                if let image = UIImage(data: cachedMediaItem.media! as Data) {
+                    self.media = image
+                    self.width = Double(image.size.width)
+                    return
+                }
+            }
+            
+            if self.url != nil && Settings.setting(for: "SettingImage") {
                 do {
                     let mediaData = try Data(contentsOf: URL(string: self.url!)!)
-                    let image = UIImage(data: mediaData)
-                    
-                    if (image != nil) {
+                    if let image = UIImage(data: mediaData) {
                         self.media = image
-                        self.width = Double(image?.size.width ?? 0)
+                        self.width = Double(image.size.width)
                         
-                        Settings.mediaCache.setObject(self.media!, forKey: self.url! as AnyObject)
+                        let q = DispatchQueue(label: "MediaCaching")
+                        q.async {
+                            self.cache.save(entity: "CacheMediaItem", keyName: "url", keyValue: self.url!, values: ["media" : mediaData])
+                        }
+                        
+                        return
                     }
                 } catch {
                     
                 }
             }
+            
+            self.width = 0
         }
     }
 }

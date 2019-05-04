@@ -20,6 +20,7 @@ class SettingsViewController: UIViewController {
     var tableView: UITableView!
     var delegate: SettingsViewControllerDelegate!
     var settingsChanged = false
+    var cache = Cache(completionClosure: {})
     
     // MARK: - View methods
     
@@ -110,7 +111,7 @@ extension SettingsViewController: UITableViewDataSource {
             switch indexPath.row {
             case 0:
                 cell.textLabel?.text = "Clear image cache"
-                cell.textLabel?.textColor = .blue
+                cell.textLabel?.textColor = self.view.tintColor
             case 1:
                 cell.textLabel?.text = "Clear read list"
                 cell.textLabel?.textColor = .blue
@@ -142,6 +143,7 @@ extension SettingsViewController: UITableViewDelegate {
             case 0:
                 self.tableView.deselectRow(at: indexPath, animated: true)
                 Settings.mediaCache.removeAllObjects()
+                self.cache.deleteAll(entity: "CacheMediaItem")
                 self.settingsChanged = true
             case 1:
                 self.tableView.deselectRow(at: indexPath, animated: true)
