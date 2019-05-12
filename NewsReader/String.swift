@@ -28,6 +28,14 @@ extension String {
         return self.substring(with: self.index(startIndex!, offsetBy: 1)..<self.endIndex)
     }
     
+    public func categories() -> [String] {
+        var categories: [String] = []
+        for substr in self.split(separator: ",") {
+            categories.append(String(substr).category() ?? "")
+        }
+        return categories
+    }
+    
     public func date() -> Date? {
         let dateFormatter = DateFormatter()
         switch self.count {

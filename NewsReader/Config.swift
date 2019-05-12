@@ -18,7 +18,8 @@ public class Config {
         Provider.guardian: "providerImageGuardian",
         Provider.bbc: "providerImageBBC",
         Provider.huff: "providerImageHuff",
-        Provider.global: "providerImageGlobal"
+        Provider.global: "providerImageGlobal",
+        Provider.seattletimes: "providerImageSeattleTimes"
     ]
     
     public static let newsFeeds = [
@@ -88,8 +89,10 @@ public class Config {
             "Technology": "https://globalnews.ca/tech/feed/",
             "Sports": "https://globalnews.ca/tech/feed/",
             "Toronto": "https://globalnews.ca/toronto/feed/",
+        ],
+        Provider.seattletimes: [
+            "Aerospace": "https://www.seattletimes.com/boeing-aerospace/feed/"
         ]
-        
     ]
     
     public static let topics = [
@@ -109,7 +112,7 @@ public class Config {
         "Offbeat",
         "Indigenous",
         "Toronto",
-        
+        "Aerospace",
     ]
     
     public static let classArticleHeadline : [Provider: String] = [
@@ -118,6 +121,7 @@ public class Config {
         Provider.guardian: "content__headline",
         Provider.bbc: "story-body__h1",
         Provider.global: "gn-speakable-title",
+        Provider.seattletimes: "article-title",
     ]
     
     public static let classArticleBody : [Provider: String] = [
@@ -126,5 +130,6 @@ public class Config {
         Provider.guardian: "content__article-body",
         Provider.bbc: "story-body__inner",
         Provider.global: "story-txt",
+        Provider.seattletimes: "article-content",
     ]
 }

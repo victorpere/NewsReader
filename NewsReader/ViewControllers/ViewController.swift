@@ -34,13 +34,22 @@ class ViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Last refreshed: \(self.newsFeed.lastUpdate.formattedString())")
         refreshControl.addTarget(self, action: #selector(refreshFeed), for: .valueChanged)
         
+//        let searchController = UISearchController(searchResultsController: self)
+//
+//        if #available(iOS 11.0, *) {
+//            self.navigationItem.searchController = searchController
+//            self.navigationItem.hidesSearchBarWhenScrolling = true
+//        } else {
+//            self.tableView.tableHeaderView = searchController.searchBar
+//        }
+        
         self.tableView.refreshControl = refreshControl
         self.tableView.tableFooterView = UIView()
         self.tableView.delegate = self
         self.newsFeed.delegate = self
         
-        self.tableView.estimatedRowHeight = self.rowHeight;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedRowHeight = self.rowHeight
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.refreshFeed()
         
@@ -207,7 +216,7 @@ extension ViewController: UITableViewDataSource {
                     largestImage?.loadMedia()
                     
                     let image = largestImage?.media as? UIImage
-                    if image != nil {
+                    if image != nil && largestImage!.width > 100.0 {
                         newsItem.image = image
                         DispatchQueue.main.async {
                             if cell!.tag == indexPath.row && cell!.guid == newsItem.guid {

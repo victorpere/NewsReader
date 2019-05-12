@@ -146,9 +146,9 @@ extension NewsFeedLoader : XMLParserDelegate {
                 newsItem.imageCaption = self.xmlBuffer
             case "category":
                 //newsItem.category = self.xmlBuffer.category()
-                let category = self.xmlBuffer.category()
-                if category != nil {
-                    newsItem.categories.append(category!)
+                let categories = self.xmlBuffer.categories()
+                if categories.count > 0 {
+                    newsItem.categories.append(categories.first!)
                 }
             default:
                 break

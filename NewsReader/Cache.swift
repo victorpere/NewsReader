@@ -29,20 +29,20 @@ public class Cache : NSObject {
     // MARK: - Public methods
     
     func save(entity entityName: String, keyName: String, keyValue: Any, values: Dictionary<String,Any?>) {
-            var object = self.fetch(entity: entityName, keyName: keyName, keyValue: keyValue)
-            if object == nil {
-                // no match
-                // new record
-                let entity = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)!
-                object = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
-                object!.setValue(keyValue, forKey: keyName)
-            }
-            
-            if self.save(object!, with: values) {
-                print("saving succeeded")
-            } else {
-                print("saving failed")
-            }
+        var object = self.fetch(entity: entityName, keyName: keyName, keyValue: keyValue)
+        if object == nil {
+            // no match
+            // new record
+            let entity = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)!
+            object = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
+            object!.setValue(keyValue, forKey: keyName)
+        }
+        
+        if self.save(object!, with: values) {
+            print("saving succeeded")
+        } else {
+            print("saving failed")
+        }
     }
     
     func fetch(entity entityName: String, keyName: String, keyValue: Any) -> NSManagedObject? {

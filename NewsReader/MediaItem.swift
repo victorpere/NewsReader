@@ -27,7 +27,7 @@ class MediaItem {
     func loadMedia() {
         if self.media == nil {
             if let cachedMediaItem = cache.fetch(entity: "CacheMediaItem", keyName: "url", keyValue: self.url!) as! CacheMediaItem? {
-                if let image = UIImage(data: cachedMediaItem.media! as Data) {
+                if cachedMediaItem.media != nil, let image = UIImage(data: cachedMediaItem.media! as Data) {
                     self.media = image
                     self.width = Double(image.size.width)
                     return
