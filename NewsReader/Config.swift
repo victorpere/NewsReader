@@ -17,7 +17,7 @@ public class Config {
         Provider.cbc: "providerImageCBC",
         Provider.guardian: "providerImageGuardian",
         Provider.bbc: "providerImageBBC",
-        Provider.huff: "providerImageHuff",
+        //Provider.huff: "providerImageHuff",
         Provider.global: "providerImageGlobal",
         Provider.seattletimes: "providerImageSeattleTimes"
     ]

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MediaItem {
+class MediaItem: CacheItem {
     
     // MARK: - Variables
     
@@ -20,13 +20,18 @@ class MediaItem {
     var type: MediaType?
     var caption: String?
     
-    var cache = Cache.init(completionClosure: {})
+    override init() {
+        super.init()
+        self.entityName = "CacheMediaItem"
+        self.key = "url"
+    }
     
     // MARK: - Public methods
     
     func loadMedia() {
         if self.media == nil {
-            if let cachedMediaItem = cache.fetch(entity: "CacheMediaItem", keyName: "url", keyValue: self.url!) as! CacheMediaItem? {
+            self.keyValue = self.url
+            if let cachedMediaItem = self.fetchFromCache() as! CacheMediaItem? {
                 if cachedMediaItem.media != nil, let image = UIImage(data: cachedMediaItem.media! as Data) {
                     self.media = image
                     self.width = Double(image.size.width)
@@ -43,7 +48,8 @@ class MediaItem {
                         
                         let q = DispatchQueue(label: "MediaCaching")
                         q.async {
-                            self.cache.save(entity: "CacheMediaItem", keyName: "url", keyValue: self.url!, values: ["media" : mediaData])
+                            self.values = ["media" : mediaData]
+                            self.saveToCache()
                         }
                         
                         return

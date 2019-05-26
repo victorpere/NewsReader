@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NewsItem {
+class NewsItem: CacheItem {
     let userDefaults = UserDefaults.standard
     var title: String?
     var link: String?
@@ -32,20 +32,29 @@ class NewsItem {
         
     var visited: Bool {
         get {
-            if self.guid == nil {
-                return false
-            }
-            if let visited = self.userDefaults.value(forKey: "visited" + self.guid!) as? Bool {
-                return visited
+            self.keyValue = self.guid
+            if let cachedNewsItem = self.fetchFromCache() as! CacheNewsItem? {
+                if cachedNewsItem.visited {
+                    return true
+                }
             }
             return false
         }
         set(value) {
-            if value && self.guid != nil {
-                self.userDefaults.setValue(value, forKey: "visited" + self.guid!)
-                self.userDefaults.synchronize()
+            if self.guid != nil {
+                self.keyValue = self.guid
+                self.values = ["visited" : value]
+                let q = DispatchQueue(label: "NewsItemCaching")
+                q.async {
+                    self.saveToCache()
+                }
             }
         }
     }
- 
+    
+    override init() {
+        super.init()
+        self.entityName = "CacheNewsItem"
+        self.key = "guid"
+    }
 }

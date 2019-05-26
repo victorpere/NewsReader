@@ -9,7 +9,14 @@
 import Foundation
 
 public enum Provider: Int, CaseIterable {
-    case ctv, cbc, guardian, bbc, huff, global, seattletimes
+    case
+        ctv,
+        cbc,
+        guardian,
+        bbc,
+        //huff,
+        global,
+        seattletimes
     
     func name() -> String {
         switch self {
@@ -21,8 +28,8 @@ public enum Provider: Int, CaseIterable {
             return "The Guardian"
         case .bbc:
             return "BBC"
-        case .huff:
-            return "Huffington Post"
+        //case .huff:
+        //    return "Huffington Post"
         case.global:
             return "Global"
         case.seattletimes:

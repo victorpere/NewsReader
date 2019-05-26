@@ -11,10 +11,10 @@ import Foundation
 extension String {
     public func categoryUrl() -> String? {
         let endIndex = self.range(of: "/", options: .backwards)?.lowerBound
-        let categoryLink = self.substring(with: self.startIndex..<endIndex!)
+        let categoryLink = String(self[self.startIndex..<endIndex!])
         let startIndex = categoryLink.range(of: "/", options: .backwards)?.upperBound
-        let range = startIndex..<endIndex!
-        let category = self.substring(with: range)
+        let range = startIndex!..<endIndex!
+        let category = String(self[range])
         
         return category.capitalizeFirst()
     }
@@ -25,7 +25,7 @@ extension String {
         }
         
         let startIndex = self.range(of: "/", options: .backwards)?.lowerBound
-        return self.substring(with: self.index(startIndex!, offsetBy: 1)..<self.endIndex)
+        return String(self[self.index(startIndex!, offsetBy: 1)..<self.endIndex])
     }
     
     public func categories() -> [String] {
