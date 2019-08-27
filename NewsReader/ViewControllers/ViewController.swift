@@ -95,6 +95,9 @@ class ViewController: UIViewController {
     }
     
     @objc fileprivate func refreshFeed() {
+        DispatchQueue.main.async {
+            self.title = Config.topics[Settings.lastFeed]
+        }
         // check for internet connectivity
         if !(self.reachability?.isReachable)! {
             self.tableView.refreshControl!.endRefreshing()
@@ -280,7 +283,7 @@ extension ViewController: NewsFeedDelegate {
             let refreshControl = self.tableView.refreshControl!
             refreshControl.attributedTitle = NSAttributedString(string: "Last refreshed: \(self.newsFeed.lastUpdate.formattedString())")
             refreshControl.endRefreshing()
-            self.title = self.newsFeed.title
+            //self.title = self.newsFeed.title
             self.tableView.reloadData()
             self.tableView.contentSize = CGSize(width: self.tableView.frame.width, height: self.tableView.contentSize.height + self.toolBarHeight)
         }

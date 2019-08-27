@@ -115,6 +115,11 @@ public class Config {
         "Aerospace",
     ]
     
+    public static let articleSections = [
+        "Headline",
+        "Body"
+    ]
+    
     public static let classArticleHeadline : [Provider: String] = [
         Provider.ctv: "articleHeadline",
         Provider.cbc: "detailHeadline",

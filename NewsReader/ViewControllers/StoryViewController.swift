@@ -27,6 +27,8 @@ class StoryViewController: UIViewController {
     
     var articleHeadlineLabel: UILabel!
     var articleBodyLabel: UILabel!
+    var articleTimeLabel: UILabel!
+    var articleAuthorLabel: UILabel!
     
     // MARK: - Initializers
     
@@ -64,13 +66,15 @@ class StoryViewController: UIViewController {
         self.articleHeadlineLabel.lineBreakMode = .byWordWrapping
         self.articleHeadlineLabel.numberOfLines = 0
         self.articleHeadlineLabel.font = UIFont.systemFont(ofSize: CGFloat(Config.fontSizeArticleHeadline))
+        //self.articleHeadlineLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         self.contentView.addSubview(self.articleHeadlineLabel)
         
         self.articleBodyLabel = UILabel(frame: CGRect(x: self.sidemargin, y: self.articleHeadlineLabel.frame.origin.y + self.articleHeadlineLabel.frame.height, width: self.view.frame.width - self.sidemargin, height: 0))
         self.articleBodyLabel.backgroundColor = .white
         self.articleBodyLabel.lineBreakMode = .byWordWrapping
         self.articleBodyLabel.numberOfLines = 0
-        self.articleBodyLabel.font = UIFont.systemFont(ofSize: CGFloat(Config.fontSizeArticleBody))
+        //self.articleBodyLabel.font = UIFont.systemFont(ofSize: CGFloat(Config.fontSizeArticleBody))
+        self.articleBodyLabel.font = UIFont.preferredFont(forTextStyle: .body)
         self.contentView.addSubview(self.articleBodyLabel)
         
         self.scrollView.addSubview(contentView)

@@ -28,23 +28,40 @@ public class Cache : NSObject {
     
     // MARK: - Public methods
     
-    func save(entity entityName: String, keyName: String, keyValue: Any, values: Dictionary<String,Any?>) {
+    /* Saves the object in data store. Either creates a new record, or updates existing one
+     depending on whether an object with the same keyValue exists
+     returns true if save succeeds
+    */
+    func save(entity entityName: String, keyName: String, keyValue: Any, values: Dictionary<String,Any?>) -> Bool {
         var object = self.fetch(entity: entityName, keyName: keyName, keyValue: keyValue)
         if object == nil {
             // no match
             // new record
-            let entity = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)!
-            object = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
+            object = self.createNewObject(for: entityName)
             object!.setValue(keyValue, forKey: keyName)
         }
         
-        if self.save(object!, with: values) {
-            print("saving succeeded")
-        } else {
-            print("saving failed")
-        }
+        return self.save(object!, with: values)
     }
     
+    /* Saves the object as an existing record with the provided objectID, or new record if no match
+     returns true if save succeeds
+    */
+    func save(entity entityName: String, objectID: NSManagedObjectID?, values: Dictionary<String,Any?>) -> Bool {
+        var object: NSManagedObject?
+        if objectID != nil {
+            object = self.fetch(with: objectID)
+        }
+        if object == nil {
+            // no match
+            // new record
+            object = self.createNewObject(for: entityName)
+        }
+        return self.save(object!, with: values)
+    }
+    
+    /* Fetches an object matching the provided keyValue
+    */
     func fetch(entity entityName: String, keyName: String, keyValue: Any) -> NSManagedObject? {
         do {
             let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
@@ -61,6 +78,38 @@ public class Cache : NSObject {
         return nil
     }
     
+    /* Fetches the object with the provided objectID
+    */
+    func fetch(with objectID: NSManagedObjectID?) -> NSManagedObject? {
+        if objectID != nil {
+            do {
+                let object = try self.managedObjectContext.existingObject(with: objectID!)
+                return object
+            } catch {
+                print("fetching with ID failed")
+            }
+        }
+        
+        return nil
+    }
+    
+    /* Fetches all the records for the specified entity
+    */
+    func fetchAll(entity entityName: String) -> [NSManagedObject]? {
+        do {
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+            // TODO: predicate
+            let fetchedResults = try self.managedObjectContext.fetch(fetchRequest)
+            return fetchedResults
+        } catch {
+            print("fetching all failed")
+        }
+        
+        return nil
+    }
+    
+    /* Deletes all the records for the specified entity
+    */
     func deleteAll(entity entityName: String) {
         do {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
@@ -83,5 +132,11 @@ public class Cache : NSObject {
         } catch {
             return false
         }
+    }
+    
+    private func createNewObject(for entityName: String) -> NSManagedObject {
+        let entity = NSEntityDescription.entity(forEntityName: entityName, in: self.managedObjectContext)!
+        let object = NSManagedObject(entity: entity, insertInto: self.managedObjectContext)
+        return object
     }
 }
